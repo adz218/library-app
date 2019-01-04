@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import SingleItemContainer from './SingleItemContainer'
+import SingleBook from './SingleBook'
 
 class QueriedItems extends Component {
   constructor(props) {
@@ -8,12 +8,18 @@ class QueriedItems extends Component {
   }
 
   render() {
-    const title = 'title_suggest'
+    const author = 'author_name'
     return (
-      <div>
+      <div className="books-container">
         {this.props.library.docs &&
           this.props.library.docs.map(book => {
-            return <div>{book.title}</div>
+            return (
+              <SingleBook
+                title={book.title}
+                isbn={book.isbn && book.isbn[0]}
+                author={book[author] && book[author][0]}
+              />
+            )
           })}
       </div>
     )

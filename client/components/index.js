@@ -6,6 +6,6 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {default as GeneralSearch} from './generalSearch'
-export {default as QueriedItems} from './queriedItems'
+export {default as Search} from './search'
+export {default as QueriedItems} from './bookList'
 export {default as SearchDropdown} from './searchDropdown'

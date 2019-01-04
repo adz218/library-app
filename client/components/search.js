@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {Button} from 'react-bootstrap'
 import {generalSearch, titleSearch, authorSearch} from '../store/library'
 
+const sessionStorage = window.sessionStorage
+
 export class Search extends Component {
   constructor(props) {
     super(props)

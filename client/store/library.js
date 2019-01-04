@@ -10,6 +10,7 @@ export const generalSearch = searchInfo => {
       const formattedSearch = searchInfo.query.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
       const queryData = queryInfo.data
+      console.log('returned query result', queryData)
       dispatch(queryResult(queryData))
     } catch (err) {
       console.error(err)
