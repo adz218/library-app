@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Button} from 'react-bootstrap'
-import Search from './search'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>

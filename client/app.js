@@ -1,13 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Navbar, Search, QueriedItems} from './components'
+import {Navbar, GeneralSearch, QueriedItems} from './components'
 import Routes from './routes'
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Search />
+      <GeneralSearch />
       <QueriedItems />
     </div>
   )

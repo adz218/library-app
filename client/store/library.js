@@ -4,12 +4,35 @@ const GET_QUERY_RESULT = 'GET_QUERY_RESULT'
 
 const queryResult = searchInfo => ({type: GET_QUERY_RESULT, searchInfo})
 
-export const sendQueryThunk = searchInfo => {
+export const generalSearch = searchInfo => {
   return async dispatch => {
     try {
-      const queryInfo = await axios.post('/api/query', searchInfo)
+      const queryInfo = await axios.get('/api/query/general', searchInfo)
       const queryData = queryInfo.data
-      console.log('response data', queryData)
+      dispatch(queryResult(queryData))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const titleSearch = searchInfo => {
+  return async dispatch => {
+    try {
+      const queryInfo = await axios.post('/api/query/title', searchInfo)
+      const queryData = queryInfo.data
+      dispatch(queryResult(queryData))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const authorSearch = searchInfo => {
+  return async dispatch => {
+    try {
+      const queryInfo = await axios.post('/api/query/author', searchInfo)
+      const queryData = queryInfo.data
       dispatch(queryResult(queryData))
     } catch (err) {
       console.error(err)

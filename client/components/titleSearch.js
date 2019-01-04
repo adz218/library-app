@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import axios from 'axios'
 import {sendQueryThunk} from '../store/library'
 
-export class SearchField extends Component {
+export class GeneralSearch extends Component {
   constructor(props) {
     super(props)
     this.state = {query: ''}
@@ -53,5 +53,5 @@ const mapDispatch = dispatch => ({
 const ConnectedSearchField = connect(
   mapState,
   mapDispatch
-)(SearchField)
+)(GeneralSearch)
 export default ConnectedSearchField
