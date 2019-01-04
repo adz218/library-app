@@ -1,15 +1,24 @@
 import React from 'react'
-
-import {Navbar} from './components'
+import {connect} from 'react-redux'
+import {Navbar, Search, QueriedItems} from './components'
 import Routes from './routes'
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
+      <Search />
+      <QueriedItems />
     </div>
   )
 }
 
-export default App
+const mapState = state => ({
+  user: state.user,
+  library: state.library
+})
+
+export default connect(
+  mapState,
+  null
+)(App)
