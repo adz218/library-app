@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import axios from 'axios'
-import {generalSearch} from '../store/library'
+import {Button} from 'react-bootstrap'
+import {generalSearch, titleSearch, authorSearch} from '../store/library'
 
-export class GeneralSearch extends Component {
+export class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {query: ''}
@@ -19,7 +19,8 @@ export class GeneralSearch extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.sendQuery(this.state)
+    const searchType = 'send' + this.props.searchCategory + 'Search'
+    this.props[searchType](this.state)
     this.setState({query: ''})
   }
 
@@ -32,9 +33,9 @@ export class GeneralSearch extends Component {
             name="query"
             value={this.state.query}
             onChange={this.handleChange}
-            placeholder="search here"
+            placeholder={`Search By ${this.props.searchCategory}`}
           />
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </form>
       </div>
     )
@@ -42,16 +43,18 @@ export class GeneralSearch extends Component {
 }
 
 const mapState = state => ({
-  user: state.user,
-  library: state.library
+  library: state.library,
+  searchCategory: state.searchCategory
 })
 
 const mapDispatch = dispatch => ({
-  sendQuery: searchInput => dispatch(generalSearch(searchInput))
+  sendGeneralSearch: searchInput => dispatch(generalSearch(searchInput)),
+  sendTitleSearch: searchInput => dispatch(titleSearch(searchInput)),
+  sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput))
 })
 
 const ConnectedSearchField = connect(
   mapState,
   mapDispatch
-)(GeneralSearch)
+)(Search)
 export default ConnectedSearchField

@@ -9,10 +9,6 @@ class QueriedItems extends Component {
 
   render() {
     const title = 'title_suggest'
-    const numFound = 'numFound'
-    const docs = 'docs'
-    console.log('thispropslibrary', this.props.library)
-
     return (
       <div>
         {this.props.library.docs &&

@@ -7,7 +7,8 @@ const queryResult = searchInfo => ({type: GET_QUERY_RESULT, searchInfo})
 export const generalSearch = searchInfo => {
   return async dispatch => {
     try {
-      const queryInfo = await axios.get('/api/query/general', searchInfo)
+      const formattedSearch = searchInfo.query.replace(' ', '+')
+      const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
       const queryData = queryInfo.data
       dispatch(queryResult(queryData))
     } catch (err) {
@@ -19,7 +20,8 @@ export const generalSearch = searchInfo => {
 export const titleSearch = searchInfo => {
   return async dispatch => {
     try {
-      const queryInfo = await axios.post('/api/query/title', searchInfo)
+      const formattedTitle = searchInfo.query.replace(' ', '+')
+      const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
       const queryData = queryInfo.data
       dispatch(queryResult(queryData))
     } catch (err) {
@@ -31,7 +33,10 @@ export const titleSearch = searchInfo => {
 export const authorSearch = searchInfo => {
   return async dispatch => {
     try {
-      const queryInfo = await axios.post('/api/query/author', searchInfo)
+      const formattedAuthorName = searchInfo.query.replace(' ', '+')
+      const queryInfo = await axios.get(
+        `/api/query/title/${formattedAuthorName}`
+      )
       const queryData = queryInfo.data
       dispatch(queryResult(queryData))
     } catch (err) {
