@@ -9,15 +9,18 @@ class QueriedItems extends Component {
 
   render() {
     const author = 'author_name'
+    const cover = 'cover_i'
     return (
       <div className="books-container">
         {this.props.library.docs &&
-          this.props.library.docs.map(book => {
+          this.props.library.docs.map((book, idx) => {
             return (
               <SingleBook
                 title={book.title}
-                isbn={book.isbn && book.isbn[0]}
                 author={book[author] && book[author][0]}
+                isbn={book.isbn && book.isbn[0]}
+                cover={book[cover]}
+                key={idx}
               />
             )
           })}

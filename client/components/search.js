@@ -26,21 +26,17 @@ export class Search extends Component {
   handleSubmit(event) {
     event.preventDefault()
     const searchType = 'send' + this.props.searchCategory + 'Search'
-    this.props[searchType](this.state)
+    this.props[searchType](this.state.query)
     sessionStorage.setItem('prevQuery', this.state.query)
     sessionStorage.setItem('prevCategory', this.props.searchCategory)
-    console.log('sessionStorage set at submit', sessionStorage)
     this.setState({query: ''})
   }
 
   componentDidMount() {
-    //need to perform check here to see if previous state existed,
-    //if so prev state should persist through refresh
-    console.log('sessionStorage at mount', sessionStorage)
     if (sessionStorage.prevQuery) {
-      this.props[this.formatSearch(sessionStorage.prevCategory)]({
-        query: sessionStorage.prevQuery
-      })
+      this.props[this.formatSearch(sessionStorage.prevCategory)](
+        sessionStorage.prevQuery
+      )
     }
   }
 

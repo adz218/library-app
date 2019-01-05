@@ -6,7 +6,15 @@ const SingleBook = props => {
     <div className="single-book-card">
       <p>
         {' '}
-        <img src={`http://covers.openlibrary.org/b/isbn/${props.isbn}-S.jpg`} />
+        {props.cover ? (
+          <img
+            src={`https://covers.openlibrary.org/w/id/${props.cover}-S.jpg`}
+          />
+        ) : (
+          <img
+            src={`http://covers.openlibrary.org/b/isbn/${props.isbn}-S.jpg`}
+          />
+        )}
         {props.title} - {props.author}
       </p>
     </div>
