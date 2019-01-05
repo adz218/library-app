@@ -35,7 +35,6 @@ class QueriedItems extends Component {
 }
 
 const mapState = state => ({
-  user: state.user,
   library: state.library
 })
 

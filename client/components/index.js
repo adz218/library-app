@@ -4,8 +4,6 @@
  * having to figure out which file they belong to!
  */
 export {default as Header} from './header'
-export {default as UserHome} from './user-home'
-export {Login, Signup} from './auth-form'
 export {default as Search} from './search'
 export {default as QueriedItems} from './bookList'
 export {default as SearchDropdown} from './searchDropdown'

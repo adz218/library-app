@@ -11,12 +11,6 @@ const Header = ({handleClick, isLoggedIn}) => (
   </div>
 )
 
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
-
 const mapDispatch = dispatch => {
   return {
     handleClick() {
@@ -26,14 +20,6 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(Header)
-
-/**
- * PROP TYPES
- */
-Header.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}

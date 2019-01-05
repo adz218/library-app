@@ -4,8 +4,6 @@ import {Header, Search, QueriedItems, SingleBookComponent} from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
 import {generalSearch, titleSearch, authorSearch} from './store/library'
 
-import Routes from './routes'
-
 const sessionStorage = window.sessionStorage
 
 class App extends Component {

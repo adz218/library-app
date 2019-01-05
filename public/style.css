@@ -27,6 +27,14 @@ form div {
   align-items: center;
 }
 
+img {
+  cursor: pointer;
+}
+
+.book-title {
+  cursor: pointer;
+}
+
 .header-content {
   display: flex;
   font-family: 'Oswald', sans-serif;
@@ -76,4 +84,9 @@ form div {
 .list-group-item {
   display: inline-block;
   margin-bottom: 10px;
+}
+
+.list-group-item:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
 }

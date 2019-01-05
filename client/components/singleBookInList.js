@@ -32,7 +32,9 @@ class SingleBookInList extends Component {
               onClick={() => this.viewSingleBook()}
             />
           )}{' '}
-          <p onClick={() => this.viewSingleBook()}>{title} </p>
+          <p className="book-title" onClick={() => this.viewSingleBook()}>
+            {title}{' '}
+          </p>
           {author}
         </div>
       </ListGroupItem>
