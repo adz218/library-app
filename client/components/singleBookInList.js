@@ -12,7 +12,8 @@ class SingleBookInList extends Component {
 
   viewSingleBook() {
     const viewInfo = {type: 'singleBook', info: this.props}
-    sessionStorage.setItem('currentView', 'singleBook')
+    sessionStorage.setItem('currentView', JSON.stringify(viewInfo))
+    console.log('set storage on view singlebook', sessionStorage)
     this.props.changeView(viewInfo)
   }
 
@@ -21,7 +22,6 @@ class SingleBookInList extends Component {
     return (
       <ListGroupItem>
         <div className="list-item">
-          {' '}
           {cover ? (
             <img
               src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
@@ -33,10 +33,8 @@ class SingleBookInList extends Component {
               onClick={() => this.viewSingleBook()}
             />
           )}{' '}
-          <p>
-            <p onClick={() => this.viewSingleBook()}>{title} </p>
-            {author}
-          </p>
+          <p onClick={() => this.viewSingleBook()}>{title} </p>
+          {author}
         </div>
       </ListGroupItem>
     )

@@ -30,6 +30,7 @@ export class Search extends Component {
     this.props[searchType](this.state.query)
     sessionStorage.setItem('prevQuery', this.state.query)
     sessionStorage.setItem('prevCategory', this.props.searchCategory)
+    console.log('set storage on search submit', sessionStorage)
     this.setState({query: ''})
   }
 
