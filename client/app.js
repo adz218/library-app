@@ -1,22 +1,25 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Header, Search, QueriedItems, SearchDropdown} from './components'
+import {Header, Search, QueriedItems, SingleBookComponent} from './components'
 import Routes from './routes'
 
-const App = () => {
+const sessionStorage = window.sessionStorage
+
+const App = props => {
   return (
     <div>
       <Header />
-      <SearchDropdown />
       <Search />
-      <QueriedItems />
+      {props.view.type === 'default' && <QueriedItems />}
+      {props.view.type === 'singleBook' && <SingleBookComponent />}
     </div>
   )
 }
 
 const mapState = state => ({
   user: state.user,
-  library: state.library
+  library: state.library,
+  view: state.view
 })
 
 export default connect(

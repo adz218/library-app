@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import SingleBook from './SingleBook'
+import SingleBookInList from './SingleBookInList'
+import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
 class QueriedItems extends Component {
   constructor(props) {
@@ -11,19 +12,23 @@ class QueriedItems extends Component {
     const author = 'author_name'
     const cover = 'cover_i'
     return (
-      <div className="books-container">
-        {this.props.library.docs &&
-          this.props.library.docs.map((book, idx) => {
-            return (
-              <SingleBook
-                title={book.title}
-                author={book[author] && book[author][0]}
-                isbn={book.isbn && book.isbn[0]}
-                cover={book[cover]}
-                key={idx}
-              />
-            )
-          })}
+      <div className="queried-books-container">
+        <ListGroup>
+          {this.props.library.docs &&
+            this.props.library.docs.map((book, idx) => {
+              return (
+                <SingleBookInList
+                  title={book.title}
+                  author={book[author] && book[author][0]}
+                  isbn={book.isbn && book.isbn[0]}
+                  cover={book[cover]}
+                  oclc={book.oclc && book.oclc}
+                  lccn={book.lccn && book.lccn}
+                  key={idx}
+                />
+              )
+            })}
+        </ListGroup>
       </div>
     )
   }

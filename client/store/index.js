@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import library from './library'
 import searchCategory from './searchCategory'
+import view from './view'
 
-const reducer = combineReducers({user, library, searchCategory})
+const reducer = combineReducers({user, library, searchCategory, view})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

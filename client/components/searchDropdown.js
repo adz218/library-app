@@ -5,19 +5,15 @@ import {Button, DropdownButton, MenuItem} from 'react-bootstrap'
 import {setCategory} from '../store/searchCategory'
 
 const SearchDropdown = props => (
-  <div className="dropdown">
-    <DropdownButton title="Search By" id="dropdown">
-      <MenuItem onSelect={() => props.setSearchCategory('General')}>
-        General
-      </MenuItem>
-      <MenuItem onSelect={() => props.setSearchCategory('Title')}>
-        Title
-      </MenuItem>
-      <MenuItem onSelect={() => props.setSearchCategory('Author')}>
-        Author
-      </MenuItem>
-    </DropdownButton>
-  </div>
+  <DropdownButton title="Search By" id="dropdown">
+    <MenuItem onSelect={() => props.setSearchCategory('General')}>
+      General
+    </MenuItem>
+    <MenuItem onSelect={() => props.setSearchCategory('Title')}>Title</MenuItem>
+    <MenuItem onSelect={() => props.setSearchCategory('Author')}>
+      Author
+    </MenuItem>
+  </DropdownButton>
 )
 
 const mapDispatch = dispatch => ({

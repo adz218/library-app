@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button} from 'react-bootstrap'
+import {Button, FormControl, FormGroup, Form, InputGroup} from 'react-bootstrap'
 import {generalSearch, titleSearch, authorSearch} from '../store/library'
+import SearchDropdown from './searchDropDown'
 
 const sessionStorage = window.sessionStorage
 
@@ -33,7 +34,7 @@ export class Search extends Component {
   }
 
   componentDidMount() {
-    if (sessionStorage.prevQuery) {
+    if (sessionStorage.prevQuery && sessionStorage.currentView === 'default') {
       this.props[this.formatSearch(sessionStorage.prevCategory)](
         sessionStorage.prevQuery
       )
@@ -42,9 +43,12 @@ export class Search extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
+      <Form inline onSubmit={this.handleSubmit}>
+        <FormGroup controlId="form-query">
+          <InputGroup>
+            <SearchDropdown />
+          </InputGroup>
+          <FormControl
             type="text"
             name="query"
             value={this.state.query}
@@ -52,15 +56,16 @@ export class Search extends Component {
             placeholder={`Search By ${this.props.searchCategory}`}
           />
           <Button type="submit">Submit</Button>
-        </form>
-      </div>
+        </FormGroup>
+      </Form>
     )
   }
 }
 
 const mapState = state => ({
   library: state.library,
-  searchCategory: state.searchCategory
+  searchCategory: state.searchCategory,
+  view: state.view.type
 })
 
 const mapDispatch = dispatch => ({
