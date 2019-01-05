@@ -20,6 +20,21 @@ form div {
   display: inline-block;
 }
 
+.header {
+  display: flex;
+  margin: 0 auto;
+  background: rgb(86, 152, 128);
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  font-family: 'Oswald', sans-serif;
+  font-size: 45px;
+  margin: 0;
+  padding: 0.7em 0.7em;
+}
+
 .queried-books-container {
   display: flex;
   flex-direction: column;
@@ -44,6 +59,13 @@ form div {
   margin: 0 auto;
 }
 
+.input-group {
+  margin-right: -10px;
+}
+
+.form-control {
+  width: 100%;
+}
 .form-group {
   display: flex;
   flex-direction: column;
@@ -51,6 +73,7 @@ form div {
   align-items: center;
 }
 
-.list-item {
+.list-group-item {
   display: inline-block;
+  margin-bottom: 10px;
 }

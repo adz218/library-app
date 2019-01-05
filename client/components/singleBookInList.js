@@ -13,7 +13,6 @@ class SingleBookInList extends Component {
   viewSingleBook() {
     const viewInfo = {type: 'singleBook', info: this.props}
     sessionStorage.setItem('currentView', JSON.stringify(viewInfo))
-    console.log('set storage on view singlebook', sessionStorage)
     this.props.changeView(viewInfo)
   }
 

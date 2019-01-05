@@ -20,26 +20,13 @@ export class Search extends Component {
     })
   }
 
-  formatSearch(category) {
-    return 'send' + category + 'Search'
-  }
-
   handleSubmit(event) {
     event.preventDefault()
     const searchType = 'send' + this.props.searchCategory + 'Search'
     this.props[searchType](this.state.query)
     sessionStorage.setItem('prevQuery', this.state.query)
     sessionStorage.setItem('prevCategory', this.props.searchCategory)
-    console.log('set storage on search submit', sessionStorage)
     this.setState({query: ''})
-  }
-
-  componentDidMount() {
-    if (sessionStorage.prevQuery && sessionStorage.currentView === 'default') {
-      this.props[this.formatSearch(sessionStorage.prevCategory)](
-        sessionStorage.prevQuery
-      )
-    }
   }
 
   render() {

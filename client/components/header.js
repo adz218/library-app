@@ -7,7 +7,7 @@ import {Button} from 'react-bootstrap'
 
 const Header = ({handleClick, isLoggedIn}) => (
   <div className="header">
-    <h1>Open Library!</h1>
+    <div className="header-content">Open Library!</div>
   </div>
 )
 
