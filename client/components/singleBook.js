@@ -10,19 +10,18 @@ export class SingleBookComponent extends Component {
     super(props)
   }
 
+  handleSelect() {
+    this.props.backToSearch()
+    sessionStorage.setItem('currentView', 'default')
+  }
+
   render() {
     const {title, author, isbn, cover, oclc, lccn} = this.props.singleBookInfo
     return (
       <div>
-        {title} - {author}
+        {title} - {author} - {isbn} - {cover} - {oclc} - {lccn}
         <Pager>
-          <Pager.Item
-            onSelect={() => {
-              this.props.backToSearch()
-              sessionStorage.setItem('currentView', 'default')
-              console.log('sessionstorage on return to search', sessionStorage)
-            }}
-          >
+          <Pager.Item onSelect={() => this.handleSelect()}>
             Back To Search
           </Pager.Item>
         </Pager>

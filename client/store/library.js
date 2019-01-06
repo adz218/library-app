@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const GET_QUERY_RESULT = 'GET_QUERY_RESULT'
+const CLEAR_SEARCH = 'CLEAR_SEARCH'
 
 const queryResult = searchInfo => ({type: GET_QUERY_RESULT, searchInfo})
 
@@ -46,12 +47,18 @@ export const authorSearch = searchInfo => {
   }
 }
 
+export const clearSearch = () => ({
+  type: CLEAR_SEARCH
+})
+
 const initialState = []
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_QUERY_RESULT:
       return action.searchInfo
+    case CLEAR_SEARCH:
+      return []
     default:
       return state
   }

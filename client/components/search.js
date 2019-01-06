@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, FormControl, FormGroup, Form, InputGroup} from 'react-bootstrap'
-import {generalSearch, titleSearch, authorSearch} from '../store/library'
+import {
+  generalSearch,
+  titleSearch,
+  authorSearch,
+  clearSearch
+} from '../store/library'
+import {restoreDefaultView} from '../store/view'
 import SearchDropdown from './searchDropDown'
 
 const sessionStorage = window.sessionStorage
@@ -22,10 +28,20 @@ export class Search extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+
+    //clearing previous search and updating state to 'default' search view
+    this.props.clearPreviousSearch()
+    this.props.backToSearch()
+
     const searchType = 'send' + this.props.searchCategory + 'Search'
     this.props[searchType](this.state.query)
+
+    //keeping track of most recent search on the session
     sessionStorage.setItem('prevQuery', this.state.query)
     sessionStorage.setItem('prevCategory', this.props.searchCategory)
+    sessionStorage.setItem('currentView', 'default')
+
+    //clearing the input search field
     this.setState({query: ''})
   }
 
@@ -59,7 +75,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   sendGeneralSearch: searchInput => dispatch(generalSearch(searchInput)),
   sendTitleSearch: searchInput => dispatch(titleSearch(searchInput)),
-  sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput))
+  sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput)),
+  backToSearch: () => dispatch(restoreDefaultView()),
+  clearPreviousSearch: () => dispatch(clearSearch())
 })
 
 const ConnectedSearchField = connect(

@@ -11,6 +11,8 @@ class QueriedItems extends Component {
   render() {
     const author = 'author_name'
     const cover = 'cover_i'
+    const publish = 'publish_year'
+    const editionQuant = 'edition_count'
     return (
       <div className="queried-books-container">
         <ListGroup>
@@ -20,6 +22,8 @@ class QueriedItems extends Component {
                 <SingleBookInList
                   title={book.title}
                   author={book[author] && book[author][0]}
+                  publish={book[publish] && book[publish][0]}
+                  editions={book[editionQuant]}
                   isbn={book.isbn && book.isbn[0]}
                   cover={book[cover]}
                   oclc={book.oclc && book.oclc}

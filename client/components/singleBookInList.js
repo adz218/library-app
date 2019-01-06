@@ -16,26 +16,42 @@ class SingleBookInList extends Component {
     this.props.changeView(viewInfo)
   }
 
+  editionQuantity() {
+    if (this.props.editions > 1) {
+      return `${this.props.editions} editions`
+    } else {
+      return `1 edition`
+    }
+  }
+
   render() {
-    const {title, author, isbn, cover, oclc, lccn} = this.props
+    const {title, author, publish, isbn, cover, oclc, lccn} = this.props
+    console.log(this.props.editions)
     return (
       <ListGroupItem>
         <div className="list-item">
-          {cover ? (
-            <img
-              src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
-              onClick={() => this.viewSingleBook()}
-            />
-          ) : (
-            <img
-              src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
-              onClick={() => this.viewSingleBook()}
-            />
-          )}{' '}
-          <p className="book-title" onClick={() => this.viewSingleBook()}>
-            {title}{' '}
-          </p>
+          <div
+            className="book-title-and-cover"
+            onClick={() => this.viewSingleBook()}
+          >
+            {cover ? (
+              <img
+                src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
+                onClick={() => this.viewSingleBook()}
+              />
+            ) : (
+              <img
+                src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
+                onClick={() => this.viewSingleBook()}
+              />
+            )}{' '}
+            {title}
+          </div>
           {author}
+          <br />
+          <p>
+            {this.editionQuantity()} - first published in {publish}
+          </p>
         </div>
       </ListGroupItem>
     )
