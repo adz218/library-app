@@ -20,8 +20,8 @@ export const generalSearch = searchInfo => {
       const formattedSearch = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
       const queryData = queryInfo.data
-      console.log('returned query result', queryData)
-      dispatch(queryResult(queryData))
+      console.log('returned query result', queryData.docs)
+      dispatch(queryResult(queryData.docs))
     } catch (err) {
       console.error(err)
     }
@@ -34,7 +34,7 @@ export const titleSearch = searchInfo => {
       const formattedTitle = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
       const queryData = queryInfo.data
-      dispatch(queryResult(queryData))
+      dispatch(queryResult(queryData.docs))
     } catch (err) {
       console.error(err)
     }
@@ -49,7 +49,7 @@ export const authorSearch = searchInfo => {
         `/api/query/author/${formattedAuthorName}`
       )
       const queryData = queryInfo.data
-      dispatch(queryResult(queryData))
+      dispatch(queryResult(queryData.docs))
     } catch (err) {
       console.error(err)
     }

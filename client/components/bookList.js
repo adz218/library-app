@@ -14,12 +14,12 @@ class QueriedItems extends Component {
     const publish = 'first_publish_year'
     const editionQuant = 'edition_count'
 
-    const {docs} = this.props.library
+    const {library} = this.props
     return (
       <div className="queried-books-container">
         <ListGroup>
-          {docs &&
-            docs.map((book, idx) => {
+          {library.length > 0 &&
+            library.map((book, idx) => {
               return (
                 <SingleBookInList
                   title={book.title}

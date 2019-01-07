@@ -8,12 +8,12 @@ class SortAndFilter extends Component {
 
   //onclick methods
   sortByFirstPublish() {
-    const {docs} = this.props.library
+    const {library} = this.props
     const publish = 'first_publish_year'
     const postSort = []
 
     //removing items with undefined publish dates
-    const filteredDocs = docs.filter(doc => {
+    const filteredDocs = library.filter(doc => {
       if (!doc[publish]) postSort.push(doc)
       if (doc[publish]) return true
     })
@@ -23,15 +23,15 @@ class SortAndFilter extends Component {
     })
 
     const result = postSort.concat(filteredDocs)
-    this.props.sortByPublish({docs: result})
+    this.props.sortByPublish(result)
   }
 
   render() {
-    const {docs} = this.props.library
-    return docs ? (
+    const {library} = this.props
+    return library.length ? (
       <div className="sort-and-filter-toolbar">
         <div className="sort-option">
-          {`${docs.length} hits`}
+          {`${library.length} hits`}
           SORT BY:
           <a onClick={() => this.sortByFirstPublish()}>first published</a>
         </div>
