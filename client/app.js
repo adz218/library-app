@@ -8,7 +8,12 @@ import {
   SortAndFilter
 } from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
-import {generalSearch, titleSearch, authorSearch} from './store/library'
+import {
+  generalSearch,
+  titleSearch,
+  authorSearch,
+  queryResult
+} from './store/library'
 
 const sessionStorage = window.sessionStorage
 
@@ -23,9 +28,7 @@ class App extends Component {
 
   componentDidMount() {
     if (sessionStorage.prevQuery) {
-      this.props[this.formatSearch(sessionStorage.prevCategory)](
-        sessionStorage.prevQuery
-      )
+      this.props.restoreSearch(JSON.parse(sessionStorage.prevQuery))
     }
     if (
       sessionStorage.currentView !== 'default' &&
@@ -58,7 +61,8 @@ const mapDispatch = dispatch => ({
   sendGeneralSearch: searchInput => dispatch(generalSearch(searchInput)),
   sendTitleSearch: searchInput => dispatch(titleSearch(searchInput)),
   sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput)),
-  changeView: viewInfo => dispatch(changeViewInStore(viewInfo))
+  changeView: viewInfo => dispatch(changeViewInStore(viewInfo)),
+  restoreSearch: info => dispatch(queryResult(info))
 })
 
 export default connect(

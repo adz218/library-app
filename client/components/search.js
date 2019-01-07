@@ -10,7 +10,7 @@ import {
 import {restoreDefaultView} from '../store/view'
 import SearchDropdown from './searchDropDown'
 
-const sessionStorage = window.sessionStorage
+const session = window.sessionStorage
 
 export class Search extends Component {
   constructor(props) {
@@ -36,10 +36,7 @@ export class Search extends Component {
     const searchType = 'send' + this.props.searchCategory + 'Search'
     this.props[searchType](this.state.query)
 
-    //keeping track of most recent search on the session
-    sessionStorage.setItem('prevQuery', this.state.query)
-    sessionStorage.setItem('prevCategory', this.props.searchCategory)
-    sessionStorage.setItem('currentView', 'default')
+    session.setItem('currentView', 'default')
 
     //clearing the input search field
     this.setState({query: ''})

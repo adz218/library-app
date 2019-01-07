@@ -1,4 +1,5 @@
 import axios from 'axios'
+const session = window.sessionStorage
 
 const GET_QUERY_RESULT = 'GET_QUERY_RESULT'
 const CLEAR_SEARCH = 'CLEAR_SEARCH'
@@ -19,9 +20,10 @@ export const generalSearch = searchInfo => {
     try {
       const formattedSearch = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
-      const queryData = queryInfo.data
-      console.log('returned query result', queryData.docs)
-      dispatch(queryResult(queryData.docs))
+      const {docs} = queryInfo.data
+      console.log('query result', docs)
+      session.setItem('prevQuery', JSON.stringify(docs))
+      dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)
     }
@@ -33,8 +35,9 @@ export const titleSearch = searchInfo => {
     try {
       const formattedTitle = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
-      const queryData = queryInfo.data
-      dispatch(queryResult(queryData.docs))
+      const {docs} = queryInfo.data
+      session.setItem('prevQuery', JSON.stringify(docs))
+      dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)
     }
@@ -48,8 +51,9 @@ export const authorSearch = searchInfo => {
       const queryInfo = await axios.get(
         `/api/query/author/${formattedAuthorName}`
       )
-      const queryData = queryInfo.data
-      dispatch(queryResult(queryData.docs))
+      const {docs} = queryInfo.data
+      session.setItem('prevQuery', JSON.stringify(docs))
+      dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)
     }
