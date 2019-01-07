@@ -27,11 +27,7 @@ form div {
   align-items: center;
 }
 
-img {
-  cursor: pointer;
-}
-
-.book-title {
+.book-title-and-cover {
   cursor: pointer;
 }
 

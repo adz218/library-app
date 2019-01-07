@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Header, Search, QueriedItems, SingleBookComponent} from './components'
+import {
+  Header,
+  Search,
+  QueriedItems,
+  SingleBookComponent,
+  SortAndFilter
+} from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
 import {generalSearch, titleSearch, authorSearch} from './store/library'
 
@@ -34,6 +40,7 @@ class App extends Component {
       <div>
         <Header />
         <Search />
+        {this.props.view.type === 'default' && <SortAndFilter />}
         {this.props.view.type === 'default' && <QueriedItems />}
         {this.props.view.type === 'singleBook' && <SingleBookComponent />}
       </div>

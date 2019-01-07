@@ -19,7 +19,14 @@ export class SingleBookComponent extends Component {
     const {title, author, isbn, cover, oclc, lccn} = this.props.singleBookInfo
     return (
       <div>
-        {title} - {author} - {isbn} - {cover} - {oclc} - {lccn}
+        <div>
+          {cover ? (
+            <img src={`https://covers.openlibrary.org/w/id/${cover}-M.jpg`} />
+          ) : (
+            <img src={`http://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`} />
+          )}
+        </div>
+        {title} - {author} - ISBN: {isbn}
         <Pager>
           <Pager.Item onSelect={() => this.handleSelect()}>
             Back To Search

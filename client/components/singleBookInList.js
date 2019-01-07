@@ -26,7 +26,6 @@ class SingleBookInList extends Component {
 
   render() {
     const {title, author, publish, isbn, cover, oclc, lccn} = this.props
-    console.log(this.props.editions)
     return (
       <ListGroupItem>
         <div className="list-item">
@@ -34,23 +33,28 @@ class SingleBookInList extends Component {
             className="book-title-and-cover"
             onClick={() => this.viewSingleBook()}
           >
-            {cover ? (
+            {cover && (
               <img
                 src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
                 onClick={() => this.viewSingleBook()}
               />
-            ) : (
+            )}
+            {!cover && isbn && (
               <img
                 src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
                 onClick={() => this.viewSingleBook()}
               />
+            )}
+            {!cover && !isbn && (
+              <img src="https://openlibrary.org/images/icons/avatar_book-sm.png" />
             )}{' '}
             {title}
           </div>
           {author}
           <br />
           <p>
-            {this.editionQuantity()} - first published in {publish}
+            {this.editionQuantity()}{' '}
+            {publish && `- first published in ${publish}`}
           </p>
         </div>
       </ListGroupItem>
