@@ -19,11 +19,12 @@ class FilterOptions extends Component {
       'subject',
       'person',
       'place',
-      // 'time',
-      // 'publisher',
-      // 'language',
+      'time',
+      'publisher',
+      'language',
       'ebook_count_i'
     ]
+    const ebook = 'ebook_count_i'
     const {library} = this.props
 
     return library.length ? (

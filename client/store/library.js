@@ -21,11 +21,16 @@ export const generalSearch = searchInfo => {
     try {
       const formattedSearch = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
-      const {docs} = queryInfo.data
+      const {docs, numFound} = queryInfo.data
       console.log('query result', docs)
-      session.setItem('prevQuery', JSON.stringify(docs))
-      session.setItem('restore', JSON.stringify(docs))
-      dispatch(queryResult(docs))
+      if (numFound > 0) {
+        session.setItem('prevQuery', JSON.stringify(docs))
+        session.setItem('restore', JSON.stringify(docs))
+        dispatch(queryResult(docs))
+      } else {
+        session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+        dispatch(queryResult({noneFound: true}))
+      }
     } catch (err) {
       console.error(err)
     }
@@ -37,10 +42,15 @@ export const titleSearch = searchInfo => {
     try {
       const formattedTitle = searchInfo.replace(' ', '+')
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
-      const {docs} = queryInfo.data
-      session.setItem('prevQuery', JSON.stringify(docs))
-      session.setItem('restore', JSON.stringify(docs))
-      dispatch(queryResult(docs))
+      const {docs, numFound} = queryInfo.data
+      if (numFound > 0) {
+        session.setItem('prevQuery', JSON.stringify(docs))
+        session.setItem('restore', JSON.stringify(docs))
+        dispatch(queryResult(docs))
+      } else {
+        session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+        dispatch(queryResult({noneFound: true}))
+      }
     } catch (err) {
       console.error(err)
     }
@@ -54,10 +64,15 @@ export const authorSearch = searchInfo => {
       const queryInfo = await axios.get(
         `/api/query/author/${formattedAuthorName}`
       )
-      const {docs} = queryInfo.data
-      session.setItem('prevQuery', JSON.stringify(docs))
-      session.setItem('restore', JSON.stringify(docs))
-      dispatch(queryResult(docs))
+      const {docs, numFound} = queryInfo.data
+      if (numFound > 0) {
+        session.setItem('prevQuery', JSON.stringify(docs))
+        session.setItem('restore', JSON.stringify(docs))
+        dispatch(queryResult(docs))
+      } else {
+        session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+        dispatch(queryResult({noneFound: true}))
+      }
     } catch (err) {
       console.error(err)
     }

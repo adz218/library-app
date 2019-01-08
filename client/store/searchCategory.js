@@ -1,11 +1,15 @@
 import axios from 'axios'
+const session = window.sessionStorage
 
 const SET_SEARCH_CATEGORY = 'SET_SEARCH_CATEGORY'
 
-export const setCategory = searchCategory => ({
-  type: SET_SEARCH_CATEGORY,
-  searchCategory
-})
+export const setCategory = searchCategory => {
+  session.setItem('prevCategory', searchCategory)
+  return {
+    type: SET_SEARCH_CATEGORY,
+    searchCategory
+  }
+}
 
 const initialState = 'General'
 

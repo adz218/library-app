@@ -23,7 +23,7 @@ form div {
 .header {
   display: flex;
   margin: 0 auto;
-  background: rgb(86, 152, 128);
+  /* background: rgb(86, 152, 128); */
   align-items: center;
 }
 

@@ -46,7 +46,9 @@ class App extends Component {
         <Search />
         {this.props.view.type === 'default' && <SortOptions />}
         {this.props.view.type === 'default' && <FilterOptions />}
-        {this.props.view.type === 'default' && <QueriedItems />}
+        {this.props.view.type === 'default' && sessionStorage.prevQuery && (
+          <QueriedItems />
+        )}
         {this.props.view.type === 'singleBook' && <SingleBookComponent />}
       </div>
     )

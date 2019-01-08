@@ -8,6 +8,7 @@ import {
   clearSearch
 } from '../store/library'
 import {restoreDefaultView} from '../store/view'
+import {setCategory} from '../store/searchCategory'
 import SearchDropdown from './searchDropDown'
 
 const session = window.sessionStorage
@@ -42,6 +43,12 @@ export class Search extends Component {
     this.setState({query: ''})
   }
 
+  componentDidMount() {
+    if (session.prevCategory) {
+      this.props.previousSearchCat(session.prevCategory)
+    }
+  }
+
   render() {
     return (
       <Form inline onSubmit={this.handleSubmit}>
@@ -74,7 +81,8 @@ const mapDispatch = dispatch => ({
   sendTitleSearch: searchInput => dispatch(titleSearch(searchInput)),
   sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput)),
   backToSearch: () => dispatch(restoreDefaultView()),
-  clearPreviousSearch: () => dispatch(clearSearch())
+  clearPreviousSearch: () => dispatch(clearSearch()),
+  previousSearchCat: cat => dispatch(setCategory(cat))
 })
 
 const ConnectedSearchField = connect(
