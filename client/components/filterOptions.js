@@ -15,13 +15,13 @@ class FilterOptions extends Component {
   render() {
     const subjects = [
       'author_name',
+      'first_publish_year',
       'subject',
       'person',
       'place',
-      'time',
-      'first_publish_year',
-      'publisher',
-      'language',
+      // 'time',
+      // 'publisher',
+      // 'language',
       'ebook_count_i'
     ]
     const {library} = this.props

@@ -11,14 +11,16 @@ class FilterSubject extends Component {
 
   handleSelect(value) {
     const {library, filterSubject, updateFilter} = this.props
-
     const filteredBooks = library.filter(book => {
       if (book[filterSubject]) {
         if (
-          book[filterSubject] === value ||
+          Array.isArray(book[filterSubject]) &&
           book[filterSubject].includes(value)
-        )
+        ) {
           return true
+        } else if (book[filterSubject] == value) {
+          return true
+        }
       }
     })
 
