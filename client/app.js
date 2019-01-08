@@ -5,7 +5,8 @@ import {
   Search,
   QueriedItems,
   SingleBookComponent,
-  SortAndFilter
+  SortOptions,
+  FilterOptions
 } from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
 import {
@@ -43,7 +44,8 @@ class App extends Component {
       <div>
         <Header />
         <Search />
-        {this.props.view.type === 'default' && <SortAndFilter />}
+        {this.props.view.type === 'default' && <SortOptions />}
+        {this.props.view.type === 'default' && <FilterOptions />}
         {this.props.view.type === 'default' && <QueriedItems />}
         {this.props.view.type === 'singleBook' && <SingleBookComponent />}
       </div>
