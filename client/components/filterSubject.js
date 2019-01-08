@@ -2,18 +2,53 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {queryResult} from '../store/library'
 
-const FilterSubject = props => {
-  const {library, filterSubject} = props
-  let obj = {}
+class FilterSubject extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-  library.forEach(book => {
-    obj[book[filterSubject]]
-      ? (obj[book[filterSubject]] += 1)
-      : (obj[book[filterSubject]] = 1)
-  })
+  handleSelect(event) {}
+  mapHandler(categoryObject) {
+    let category = []
+    for (let prop in categoryObject) {
+      category.push(
+        <p>
+          {prop} - {categoryObject[prop]}
+        </p>
+      )
+    }
+    return category
+  }
+  render() {
+    const {library, filterSubject} = this.props
+    let categoryObject = {}
 
-  console.log('subject and values', filterSubject, obj)
-  return <div>THIS IS THE FILTERSUB: {filterSubject}</div>
+    library.forEach(book => {
+      if (book[filterSubject]) {
+        if (Array.isArray(book[filterSubject])) {
+          book[filterSubject].forEach(categoryValue => {
+            categoryObject[categoryValue]
+              ? (categoryObject[categoryValue] += 1)
+              : (categoryObject[categoryValue] = 1)
+          })
+        } else {
+          if (categoryObject[book[filterSubject]]) {
+            categoryObject[book[filterSubject]] += 1
+          } else {
+            categoryObject[book[filterSubject]] = 1
+          }
+        }
+      }
+    })
+
+    console.log('subject and values', filterSubject, categoryObject)
+    return (
+      <div>
+        {filterSubject}
+        {this.mapHandler(categoryObject)}
+      </div>
+    )
+  }
 }
 
 const mapState = state => ({
