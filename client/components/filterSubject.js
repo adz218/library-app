@@ -7,6 +7,12 @@ const session = window.sessionStorage
 class FilterSubject extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      itemsToShow: 5
+    }
+
+    this.showMore = this.showMore.bind(this)
+    this.showLess = this.showLess.bind(this)
   }
 
   handleSelect(value) {
@@ -49,18 +55,28 @@ class FilterSubject extends Component {
     let category = []
     for (let specificVal in categoryObject) {
       category.push(
-        <a onClick={() => this.handleSelect(specificVal)}>
-          {specificVal} - {categoryObject[specificVal]}{' '}
-        </a>
+        <li>
+          <a onClick={() => this.handleSelect(specificVal)}>
+            {specificVal} - {categoryObject[specificVal]}{' '}
+          </a>
+        </li>
       )
     }
-    return category
+    return category.slice(0, this.state.itemsToShow)
   }
 
   underscoreRemoved(name) {
     if (name === 'ebook_count_i') return 'Ebook?'
     else if (name === 'first_publish_year') return 'published'
     else return name.replace('_', ' ')
+  }
+
+  showMore() {
+    this.setState({itemsToShow: this.state.itemsToShow + 5})
+  }
+
+  showLess() {
+    this.setState({itemsToShow: this.state.itemsToShow - 5})
   }
   render() {
     const {library, filterSubject} = this.props
@@ -102,13 +118,25 @@ class FilterSubject extends Component {
       })
     }
 
+    const filterQuantity = Object.keys(categoryObject).length
+
     return (
-      <div>
+      <div className="filter-subject-container">
         <b>
           {Object.keys(categoryObject).length > 0 &&
             this.underscoreRemoved(filterSubject)}
         </b>
-        {this.mapHandler(categoryObject)}
+        <ul>{this.mapHandler(categoryObject)}</ul>
+        <div className="show-more-or-less">
+          <p>
+            {filterQuantity > 5 && (
+              <a onClick={() => this.showMore()}>show more</a>
+            )}
+            {this.state.itemsToShow > 5 && (
+              <a onClick={() => this.showLess()}> | show less</a>
+            )}
+          </p>
+        </div>
       </div>
     )
   }

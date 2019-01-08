@@ -63,7 +63,9 @@ export class Search extends Component {
             onChange={this.handleChange}
             placeholder={`Search By ${this.props.searchCategory}`}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" bsStyle="primary">
+            Submit
+          </Button>
         </FormGroup>
       </Form>
     )

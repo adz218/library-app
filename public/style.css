@@ -16,7 +16,6 @@ nav a {
 }
 
 form div {
-  margin: 1em;
   display: inline-block;
 }
 
@@ -27,10 +26,18 @@ form div {
   align-items: center;
 }
 
+.page-container {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
 .book-title-and-cover {
   cursor: pointer;
 }
 
+.sort-option {
+  margin-bottom: 2rem;
+}
 .header-content {
   display: flex;
   font-family: 'Oswald', sans-serif;
@@ -41,10 +48,17 @@ form div {
 
 .queried-books-container {
   display: flex;
+  margin-right: 2rem;
   flex-direction: column;
-  width: 85%;
-  margin: 0 auto;
-  align-items: center;
+  width: 100%;
+}
+
+.search-and-filter {
+  display: flex;
+}
+
+.filter-options {
+  width: 300px;
 }
 
 .search-area {
@@ -70,6 +84,7 @@ form div {
 .form-control {
   width: 100%;
 }
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -77,12 +92,21 @@ form div {
   align-items: center;
 }
 
+.filter-subject-container {
+  align-items: center;
+}
+
+.show-more-or-less {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .list-group-item {
   display: inline-block;
   margin-bottom: 10px;
 }
 
-.list-group-item:hover {
+/* .list-group-item:hover {
   text-decoration: underline;
   transform: scale(1.1);
-}
+} */

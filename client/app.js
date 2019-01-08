@@ -41,14 +41,16 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="page-container">
         <Header />
         <Search />
         {this.props.view.type === 'default' && <SortOptions />}
-        {this.props.view.type === 'default' && <FilterOptions />}
-        {this.props.view.type === 'default' && sessionStorage.prevQuery && (
-          <QueriedItems />
-        )}
+
+        {this.props.view.type === 'default' && sessionStorage.prevQuery ? (
+          <div className="search-and-filter">
+            <QueriedItems /> <FilterOptions />
+          </div>
+        ) : null}
         {this.props.view.type === 'singleBook' && <SingleBookComponent />}
       </div>
     )

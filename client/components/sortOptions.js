@@ -65,31 +65,26 @@ class SortAndFilter extends Component {
 
   removeFilters() {
     session.setItem('prevQuery', JSON.stringify(JSON.parse(session.restore)))
-    console.log('session at remove filter', session)
     this.props.sortBy(JSON.parse(session.restore))
   }
 
   render() {
     const {library} = this.props
     return library.length ? (
-      <div className="sort-and-filter-toolbar">
-        <div className="sort-option">
-          <p>{`${library.length} hits`}</p>
-          SORT BY:
-          <ButtonGroup>
-            <Button onClick={() => this.sortByFirstPublish()}>
-              first published
-            </Button>
-            <Button onClick={() => this.sortByMostRecent()}>most recent</Button>
-            <Button onClick={() => this.sortByMostEditions()}>
-              most editions
-            </Button>
-            <Button onClick={() => this.removeFilters()}>remove filters</Button>
-            <Button onClick={() => this.props.clearSearch()}>
-              clear search
-            </Button>
-          </ButtonGroup>
-        </div>
+      <div className="sort-option">
+        <p>{`${library.length} hits`}</p>
+        SORT BY:
+        <ButtonGroup>
+          <Button onClick={() => this.sortByFirstPublish()}>
+            first published
+          </Button>
+          <Button onClick={() => this.sortByMostRecent()}>most recent</Button>
+          <Button onClick={() => this.sortByMostEditions()}>
+            most editions
+          </Button>
+          <Button onClick={() => this.removeFilters()}>remove filters</Button>
+          <Button onClick={() => this.props.clearSearch()}>clear search</Button>
+        </ButtonGroup>
       </div>
     ) : null
   }
