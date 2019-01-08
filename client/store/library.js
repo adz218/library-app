@@ -6,9 +6,10 @@ const CLEAR_SEARCH = 'CLEAR_SEARCH'
 const SORT_SEARCH = 'SORT_SEARCH'
 
 export const queryResult = searchInfo => ({type: GET_QUERY_RESULT, searchInfo})
-export const clearSearch = () => ({
-  type: CLEAR_SEARCH
-})
+export const clearSearch = () => {
+  session.setItem('prevQuery', false)
+  return {type: CLEAR_SEARCH}
+}
 
 export const publishSort = sortedBooks => ({
   type: SORT_SEARCH,
@@ -23,6 +24,7 @@ export const generalSearch = searchInfo => {
       const {docs} = queryInfo.data
       console.log('query result', docs)
       session.setItem('prevQuery', JSON.stringify(docs))
+      session.setItem('restore', JSON.stringify(docs))
       dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)
@@ -37,6 +39,7 @@ export const titleSearch = searchInfo => {
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
       const {docs} = queryInfo.data
       session.setItem('prevQuery', JSON.stringify(docs))
+      session.setItem('restore', JSON.stringify(docs))
       dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)
@@ -53,6 +56,7 @@ export const authorSearch = searchInfo => {
       )
       const {docs} = queryInfo.data
       session.setItem('prevQuery', JSON.stringify(docs))
+      session.setItem('restore', JSON.stringify(docs))
       dispatch(queryResult(docs))
     } catch (err) {
       console.error(err)

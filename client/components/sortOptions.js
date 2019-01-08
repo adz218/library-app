@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {queryResult} from '../store/library'
+import {queryResult, clearSearch} from '../store/library'
 import {Button, ButtonGroup} from 'react-bootstrap'
 
 const session = window.sessionStorage
@@ -29,7 +29,7 @@ class SortAndFilter extends Component {
     const publishSorted = noPublish.concat(filteredDocs)
 
     session.setItem('prevQuery', JSON.stringify(publishSorted))
-    this.props.sortByPublish(publishSorted)
+    this.props.sortBy(publishSorted)
   }
 
   sortByMostRecent() {
@@ -49,7 +49,7 @@ class SortAndFilter extends Component {
     const publishSorted = filteredDocs.concat(noPublish)
 
     session.setItem('prevQuery', JSON.stringify(publishSorted))
-    this.props.sortByPublish(publishSorted)
+    this.props.sortBy(publishSorted)
   }
 
   sortByMostEditions() {
@@ -60,7 +60,13 @@ class SortAndFilter extends Component {
     })
 
     session.setItem('prevQuery', JSON.stringify(editionSorted))
-    this.props.sortByPublish(editionSorted)
+    this.props.sortBy(editionSorted)
+  }
+
+  removeFilters() {
+    session.setItem('prevQuery', JSON.stringify(JSON.parse(session.restore)))
+    console.log('session at remove filter', session)
+    this.props.sortBy(JSON.parse(session.restore))
   }
 
   render() {
@@ -78,7 +84,10 @@ class SortAndFilter extends Component {
             <Button onClick={() => this.sortByMostEditions()}>
               most editions
             </Button>
-            <Button>back to original search/clear search</Button>
+            <Button onClick={() => this.removeFilters()}>remove filters</Button>
+            <Button onClick={() => this.props.clearSearch()}>
+              clear search
+            </Button>
           </ButtonGroup>
         </div>
       </div>
@@ -91,7 +100,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  sortByPublish: books => dispatch(queryResult(books))
+  sortBy: books => dispatch(queryResult(books)),
+  clearSearch: () => dispatch(clearSearch())
 })
 const ConnectedSortAndFilter = connect(
   mapState,

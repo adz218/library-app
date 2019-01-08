@@ -2,19 +2,37 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {queryResult} from '../store/library'
 
+const session = window.sessionStorage
+
 class FilterSubject extends Component {
   constructor(props) {
     super(props)
   }
 
-  handleSelect(event) {}
+  handleSelect(value) {
+    const {library, filterSubject, updateFilter} = this.props
+
+    const filteredBooks = library.filter(book => {
+      if (book[filterSubject]) {
+        if (
+          book[filterSubject] === value ||
+          book[filterSubject].includes(value)
+        )
+          return true
+      }
+    })
+
+    session.setItem('prevQuery', JSON.stringify(filteredBooks))
+    updateFilter(filteredBooks)
+  }
+
   mapHandler(categoryObject) {
     let category = []
-    for (let prop in categoryObject) {
+    for (let specificVal in categoryObject) {
       category.push(
-        <p>
-          {prop} - {categoryObject[prop]}
-        </p>
+        <a onClick={() => this.handleSelect(specificVal)}>
+          {specificVal} - {categoryObject[specificVal]}{' '}
+        </a>
       )
     }
     return category
@@ -41,10 +59,9 @@ class FilterSubject extends Component {
       }
     })
 
-    console.log('subject and values', filterSubject, categoryObject)
     return (
       <div>
-        {filterSubject}
+        <b>{Object.keys(categoryObject).length > 0 && filterSubject}</b>
         {this.mapHandler(categoryObject)}
       </div>
     )
@@ -55,8 +72,12 @@ const mapState = state => ({
   library: state.library
 })
 
+const mapDispatch = dispatch => ({
+  updateFilter: filteredBooks => dispatch(queryResult(filteredBooks))
+})
+
 const ConnectedFilterSubject = connect(
   mapState,
-  null
+  mapDispatch
 )(FilterSubject)
 export default ConnectedFilterSubject

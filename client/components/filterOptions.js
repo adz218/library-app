@@ -28,6 +28,7 @@ class FilterOptions extends Component {
 
     return library.length ? (
       <div className="filter-options">
+        FILTER BY:
         {subjects.map(subject => {
           return <FilterSubject filterSubject={subject} />
         })}
