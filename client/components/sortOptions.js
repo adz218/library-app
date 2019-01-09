@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {queryResult, clearSearch} from '../store/library'
 import {changeViewInStore} from '../store/view'
 import {Button, ButtonGroup} from 'react-bootstrap'
@@ -91,7 +92,13 @@ class SortAndFilter extends Component {
             most editions
           </Button>
           <Button onClick={() => this.removeFilters()}>remove filters</Button>
-          <Button onClick={() => this.props.clearSearch()}>clear search</Button>
+          <Button
+            onClick={() => {
+              this.props.history.push('/')
+            }}
+          >
+            clear search
+          </Button>
         </ButtonGroup>
       </div>
     ) : null
@@ -114,4 +121,4 @@ const ConnectedSortAndFilter = connect(
   mapDispatch
 )(SortAndFilter)
 
-export default ConnectedSortAndFilter
+export default withRouter(ConnectedSortAndFilter)

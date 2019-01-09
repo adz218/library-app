@@ -41,17 +41,19 @@ class App extends Component {
     return (
       <div className="page-container">
         <Header />
-        <Search />
 
         <Switch>
+          <Route exact path="/" component={Search} />
+
           {this.props.view.type === 'singleBook' && (
             <Route path="/book/:title" component={SingleBookComponent} />
           )}
 
           <Route
-            path="/"
+            path="/search/:query"
             render={() => (
               <Fragment>
+                <Search />
                 <SortOptions />
                 <div className="search-and-filter">
                   <QueriedItems /> <FilterOptions />

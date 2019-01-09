@@ -4,9 +4,10 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import library from './library'
 import searchCategory from './searchCategory'
+import query from './query'
 import view from './view'
 
-const reducer = combineReducers({library, searchCategory, view})
+const reducer = combineReducers({library, searchCategory, view, query})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

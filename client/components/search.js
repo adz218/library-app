@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link, withRouter} from 'react-router-dom'
 import {Button, FormControl, FormGroup, Form, InputGroup} from 'react-bootstrap'
 import {
   generalSearch,
@@ -8,6 +9,7 @@ import {
   clearSearch
 } from '../store/library'
 import {restoreDefaultView} from '../store/view'
+import {getQuery} from '../store/query'
 import {setCategory} from '../store/searchCategory'
 import SearchDropdown from './searchDropDown'
 
@@ -27,6 +29,10 @@ export class Search extends Component {
     })
   }
 
+  formatSearch(str) {
+    return str.replace(' ', '+')
+  }
+
   handleSubmit(event) {
     event.preventDefault()
 
@@ -36,6 +42,9 @@ export class Search extends Component {
 
     const searchType = 'send' + this.props.searchCategory + 'Search'
     this.props[searchType](this.state.query)
+
+    this.props.getQuery(this.formatSearch(this.state.query))
+    this.props.history.push(`/search/${this.formatSearch(this.state.query)}`)
 
     session.setItem('currentView', 'default')
 
@@ -80,7 +89,8 @@ export class Search extends Component {
 const mapState = state => ({
   library: state.library,
   searchCategory: state.searchCategory,
-  view: state.view.type
+  view: state.view.type,
+  query: state.query
 })
 
 const mapDispatch = dispatch => ({
@@ -89,11 +99,12 @@ const mapDispatch = dispatch => ({
   sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput)),
   backToSearch: () => dispatch(restoreDefaultView()),
   clearPreviousSearch: () => dispatch(clearSearch()),
-  previousSearchCat: cat => dispatch(setCategory(cat))
+  previousSearchCat: cat => dispatch(setCategory(cat)),
+  getQuery: query => dispatch(getQuery(query))
 })
 
 const ConnectedSearchField = connect(
   mapState,
   mapDispatch
 )(Search)
-export default ConnectedSearchField
+export default withRouter(ConnectedSearchField)
