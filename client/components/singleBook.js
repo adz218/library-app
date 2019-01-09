@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {Pager} from 'react-bootstrap'
-import {restoreDefaultView} from '../store/view'
+import {changeViewInStore, restoreDefaultView} from '../store/view'
 
-const sessionStorage = window.sessionStorage
+const session = window.sessionStorage
 
 export class SingleBookComponent extends Component {
   constructor(props) {
@@ -12,12 +12,12 @@ export class SingleBookComponent extends Component {
 
   handleSelect() {
     this.props.backToSearch()
-    sessionStorage.setItem('currentView', 'default')
+    session.setItem('currentView', 'default')
   }
 
   render() {
     const {title, author, isbn, cover, oclc, lccn} = this.props.singleBookInfo
-    return (
+    return this.props.view.type === 'singleBook' ? (
       <Fragment>
         <div className="single-book-card">
           {cover && (
@@ -46,16 +46,18 @@ export class SingleBookComponent extends Component {
           </Pager.Item>
         </Pager>
       </Fragment>
-    )
+    ) : null
   }
 }
 
 const mapState = state => ({
-  singleBookInfo: state.view.info
+  singleBookInfo: state.view.info,
+  view: state.view
 })
 
 const mapDispatch = dispatch => ({
-  backToSearch: () => dispatch(restoreDefaultView())
+  backToSearch: () => dispatch(restoreDefaultView()),
+  changeView: viewInfo => dispatch(changeViewInStore(viewInfo))
 })
 const ConnectedSingleBook = connect(
   mapState,

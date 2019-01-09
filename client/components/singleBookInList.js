@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {ListGroupItem} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import {changeViewInStore} from '../store/view'
 
 const sessionStorage = window.sessionStorage
@@ -29,35 +30,37 @@ class SingleBookInList extends Component {
     const blankStyles = {width: '40px', height: '58px'}
     return (
       <ListGroupItem onClick={() => this.viewSingleBook()}>
-        <div className="list-item">
-          <div className="book-title-and-cover">
-            {cover && (
-              <img
-                src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
-                className="search-cover-img"
-              />
-            )}
-            {!cover && isbn && (
-              <img
-                src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
-                className="search-cover-img"
-              />
-            )}
-            {!cover && !isbn && (
-              <img
-                src="https://openlibrary.org/images/icons/avatar_book-sm.png"
-                style={blankStyles}
-              />
-            )}{' '}
-            {title}
+        <Link to={`book/${title}`}>
+          <div className="list-item">
+            <div className="book-title-and-cover">
+              {cover && (
+                <img
+                  src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
+                  className="search-cover-img"
+                />
+              )}
+              {!cover && isbn && (
+                <img
+                  src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
+                  className="search-cover-img"
+                />
+              )}
+              {!cover && !isbn && (
+                <img
+                  src="https://openlibrary.org/images/icons/avatar_book-sm.png"
+                  style={blankStyles}
+                />
+              )}{' '}
+              {title}
+            </div>
+            {author}
+            <br />
+            <p>
+              {this.editionQuantity()}{' '}
+              {publish && `- first published in ${publish}`}
+            </p>
           </div>
-          {author}
-          <br />
-          <p>
-            {this.editionQuantity()}{' '}
-            {publish && `- first published in ${publish}`}
-          </p>
-        </div>
+        </Link>
       </ListGroupItem>
     )
   }

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {queryResult} from '../store/library'
 import FilterSubject from './filterSubject'
-
+const session = window.sessionStorage
 /*
 users can filter by:
 author, subject, people, places, times, first published, publisher, language
@@ -25,9 +25,9 @@ class FilterOptions extends Component {
       'ebook_count_i'
     ]
     const ebook = 'ebook_count_i'
-    const {library} = this.props
+    const {view, library} = this.props
 
-    return library.length ? (
+    return view.type === 'default' && session.prevQuery && library.length ? (
       <div className="filter-options">
         FILTER BY:
         {subjects.map(subject => {
@@ -39,7 +39,8 @@ class FilterOptions extends Component {
 }
 
 const mapState = state => ({
-  library: state.library
+  library: state.library,
+  view: state.view
 })
 
 const ConnectedFilterOptions = connect(

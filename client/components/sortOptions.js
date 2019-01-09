@@ -68,9 +68,21 @@ class SortAndFilter extends Component {
     this.props.sortBy(JSON.parse(session.restore))
   }
 
+  componentDidMount() {
+    console.log('cdm???', session)
+    if (session.prevQuery) {
+      this.props.restoreSearch(JSON.parse(session.prevQuery))
+    }
+    // if (session.currentView !== 'default' && session.currentView) {
+    //   console.log('entering on refersh', JSON.parse(session.currentView))
+    //
+    //   this.props.changeView(JSON.parse(session.currentView))
+    // }
+  }
+
   render() {
     const {library} = this.props
-    return library.length ? (
+    return library.length && this.props.view.type === 'default' ? (
       <div className="sort-option">
         <p>{`${library.length} hits`}</p>
         SORT BY:
@@ -91,12 +103,14 @@ class SortAndFilter extends Component {
 }
 
 const mapState = state => ({
-  library: state.library
+  library: state.library,
+  view: state.view
 })
 
 const mapDispatch = dispatch => ({
   sortBy: books => dispatch(queryResult(books)),
-  clearSearch: () => dispatch(clearSearch())
+  clearSearch: () => dispatch(clearSearch()),
+  restoreSearch: info => dispatch(queryResult(info))
 })
 const ConnectedSortAndFilter = connect(
   mapState,

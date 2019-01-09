@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import SingleBookInList from './SingleBookInList'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {changeViewInStore} from '../store/view'
+
+const session = window.sessionStorage
 
 class QueriedItems extends Component {
   constructor(props) {
@@ -14,8 +17,8 @@ class QueriedItems extends Component {
     const publish = 'first_publish_year'
     const editionQuant = 'edition_count'
 
-    const {library} = this.props
-    return (
+    const {view, library} = this.props
+    return view.type === 'default' && session.prevQuery ? (
       <div className="queried-books-container">
         <ListGroup>
           {library.length > 0 &&
@@ -39,17 +42,22 @@ class QueriedItems extends Component {
           )}
         </ListGroup>
       </div>
-    )
+    ) : null
   }
 }
 
 const mapState = state => ({
-  library: state.library
+  library: state.library,
+  view: state.view
+})
+
+const mapDispatch = dispatch => ({
+  changeView: viewInfo => dispatch(changeViewInStore(viewInfo))
 })
 
 const ConnectedQueriedItems = connect(
   mapState,
-  null
+  mapDispatch
 )(QueriedItems)
 
 export default ConnectedQueriedItems
