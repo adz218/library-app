@@ -11,8 +11,9 @@ export class SingleBookComponent extends Component {
   }
 
   handleSelect() {
-    this.props.backToSearch()
     session.setItem('currentView', 'default')
+    this.props.history.push('/')
+    this.props.backToSearch()
   }
 
   render() {

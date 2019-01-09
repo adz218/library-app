@@ -29,7 +29,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('cdm of app')
     if (session.prevQuery) {
       this.props.restoreSearch(JSON.parse(session.prevQuery))
     }
@@ -37,15 +36,6 @@ class App extends Component {
       this.props.changeView(JSON.parse(session.currentView))
     }
   }
-  // {this.props.view.type === 'default' && <SortOptions />}
-  //
-  // {this.props.view.type === 'default' && session.prevQuery ? (
-  //   <div className="search-and-filter">
-  //     <QueriedItems /> <FilterOptions />
-  //   </div>
-  // ) : null}
-
-  //{this.props.view.type === 'singleBook' && <SingleBookComponent />}
 
   render() {
     return (
@@ -56,7 +46,8 @@ class App extends Component {
         <Switch>
           {this.props.view.type === 'singleBook' && (
             <Route path="/book/:title" component={SingleBookComponent} />
-          )}{' '}
+          )}
+
           <Route
             path="/"
             render={() => (

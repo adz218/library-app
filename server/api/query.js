@@ -7,7 +7,6 @@ router.get('/general/:query', async (req, res, next) => {
     request(
       `http://openlibrary.org/search.json?q=${req.params.query}`,
       function(error, response, body) {
-        console.log('if null response', JSON.parse(body))
         res.json(JSON.parse(body))
       }
     )

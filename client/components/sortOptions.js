@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {queryResult, clearSearch} from '../store/library'
+import {changeViewInStore} from '../store/view'
 import {Button, ButtonGroup} from 'react-bootstrap'
 
 const session = window.sessionStorage
@@ -69,15 +70,10 @@ class SortAndFilter extends Component {
   }
 
   componentDidMount() {
-    console.log('cdm???', session)
-    if (session.prevQuery) {
-      this.props.restoreSearch(JSON.parse(session.prevQuery))
+    if (this.props.view.type === 'singleBook') {
+      this.props.changeView({type: 'default'})
+      session.setItem('currentView', 'default')
     }
-    // if (session.currentView !== 'default' && session.currentView) {
-    //   console.log('entering on refersh', JSON.parse(session.currentView))
-    //
-    //   this.props.changeView(JSON.parse(session.currentView))
-    // }
   }
 
   render() {
@@ -110,6 +106,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   sortBy: books => dispatch(queryResult(books)),
   clearSearch: () => dispatch(clearSearch()),
+  changeView: viewInfo => dispatch(changeViewInStore(viewInfo)),
   restoreSearch: info => dispatch(queryResult(info))
 })
 const ConnectedSortAndFilter = connect(
