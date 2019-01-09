@@ -130,10 +130,10 @@ class FilterSubject extends Component {
         <div className="show-more-or-less">
           <p>
             {filterQuantity > 5 && (
-              <a onClick={() => this.showMore()}>show more</a>
+              <button onClick={() => this.showMore()}>show more</button>
             )}
             {this.state.itemsToShow > 5 && (
-              <a onClick={() => this.showLess()}> | show less</a>
+              <button onClick={() => this.showLess()}>show less</button>
             )}
           </p>
         </div>

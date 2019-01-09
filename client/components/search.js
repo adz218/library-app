@@ -54,18 +54,23 @@ export class Search extends Component {
       <Form inline onSubmit={this.handleSubmit}>
         <FormGroup controlId="form-query">
           <InputGroup>
-            <SearchDropdown />
+            <InputGroup.Button>
+              <SearchDropdown />
+            </InputGroup.Button>
+
+            <FormControl
+              type="text"
+              name="query"
+              value={this.state.query}
+              onChange={this.handleChange}
+              placeholder={`Search By ${this.props.searchCategory}`}
+            />
+            <InputGroup.Button>
+              <Button type="submit" bsStyle="primary">
+                Submit
+              </Button>
+            </InputGroup.Button>
           </InputGroup>
-          <FormControl
-            type="text"
-            name="query"
-            value={this.state.query}
-            onChange={this.handleChange}
-            placeholder={`Search By ${this.props.searchCategory}`}
-          />
-          <Button type="submit" bsStyle="primary">
-            Submit
-          </Button>
         </FormGroup>
       </Form>
     )

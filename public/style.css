@@ -42,8 +42,8 @@ form div {
   display: flex;
   font-family: 'Oswald', sans-serif;
   font-size: 45px;
-  margin: 0;
-  padding: 0.7em 0.7em;
+  margin: 0 auto;
+  margin-top: 1rem;
 }
 
 .queried-books-container {
@@ -75,10 +75,7 @@ form div {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-}
-
-.input-group {
-  margin-right: -10px;
+  margin-bottom: 2rem;
 }
 
 .form-control {
@@ -106,7 +103,13 @@ form div {
   margin-bottom: 10px;
 }
 
-/* .list-group-item:hover {
-  text-decoration: underline;
-  transform: scale(1.1);
-} */
+.card-content {
+  margin-left: 2rem;
+}
+.single-book-card {
+  display: flex;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 85%;
+  border-radius: 5px;
+  margin: 0 auto;
+}
