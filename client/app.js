@@ -7,7 +7,8 @@ import {
   QueriedItems,
   SingleBookComponent,
   SortOptions,
-  FilterOptions
+  FilterOptions,
+  FilterList
 } from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
 import {
@@ -16,6 +17,7 @@ import {
   authorSearch,
   queryResult
 } from './store/library'
+import {getQuery} from './store/query'
 
 const session = window.sessionStorage
 
@@ -24,13 +26,23 @@ class App extends Component {
     super(props)
   }
 
-  formatSearch(category) {
-    return 'send' + category + 'Search'
-  }
-
   bookCheck() {
     this.props.changeView(JSON.parse(session.prevSingle))
   }
+
+  searchCheck() {
+    const searchQuery = window.location.href.split('/search/')
+    const formattedSearch = searchQuery[1].split(' ').join('+')
+    return this.props.query !== formattedSearch ? true : false
+  }
+
+  sendQuery() {
+    const searchQuery = window.location.href.split('/search/')
+    const formattedSearch = searchQuery[1].split(' ').join('+')
+    this.props.setQuery(formattedSearch)
+    this.props.sendGeneralSearch(formattedSearch)
+  }
+
   componentDidMount() {
     if (session.prevQuery) {
       this.props.restoreSearch(JSON.parse(session.prevQuery))
@@ -48,6 +60,11 @@ class App extends Component {
           session.prevSingle &&
           window.location.href.includes('/book/') &&
           this.bookCheck()}
+
+        {window.location.href.includes('/search/') &&
+          this.searchCheck() &&
+          this.sendQuery()}
+
         <Switch>
           <Route exact path="/" component={Search} />
 
@@ -61,6 +78,7 @@ class App extends Component {
               <Fragment>
                 <Search />
                 <SortOptions />
+                <FilterList />
                 <div className="search-and-filter">
                   <QueriedItems /> <FilterOptions />
                 </div>
@@ -76,7 +94,9 @@ class App extends Component {
 const mapState = state => ({
   user: state.user,
   library: state.library,
-  view: state.view
+  view: state.view,
+  search: state.searchCategory,
+  query: state.query
 })
 
 const mapDispatch = dispatch => ({
@@ -84,7 +104,8 @@ const mapDispatch = dispatch => ({
   sendTitleSearch: searchInput => dispatch(titleSearch(searchInput)),
   sendAuthorSearch: searchInput => dispatch(authorSearch(searchInput)),
   changeView: viewInfo => dispatch(changeViewInStore(viewInfo)),
-  restoreSearch: info => dispatch(queryResult(info))
+  restoreSearch: info => dispatch(queryResult(info)),
+  setQuery: query => dispatch(getQuery(query))
 })
 
 export default withRouter(

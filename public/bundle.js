@@ -113,6 +113,8 @@ var _view = __webpack_require__(/*! ./store/view */ "./client/store/view.js");
 
 var _library = __webpack_require__(/*! ./store/library */ "./client/store/library.js");
 
+var _query = __webpack_require__(/*! ./store/query */ "./client/store/query.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -147,14 +149,24 @@ function (_Component) {
   }
 
   _createClass(App, [{
-    key: "formatSearch",
-    value: function formatSearch(category) {
-      return 'send' + category + 'Search';
-    }
-  }, {
     key: "bookCheck",
     value: function bookCheck() {
       this.props.changeView(JSON.parse(session.prevSingle));
+    }
+  }, {
+    key: "searchCheck",
+    value: function searchCheck() {
+      var searchQuery = window.location.href.split('/search/');
+      var formattedSearch = searchQuery[1].split(' ').join('+');
+      return this.props.query !== formattedSearch ? true : false;
+    }
+  }, {
+    key: "sendQuery",
+    value: function sendQuery() {
+      var searchQuery = window.location.href.split('/search/');
+      var formattedSearch = searchQuery[1].split(' ').join('+');
+      this.props.setQuery(formattedSearch);
+      this.props.sendGeneralSearch(formattedSearch);
     }
   }, {
     key: "componentDidMount",
@@ -172,7 +184,7 @@ function (_Component) {
     value: function render() {
       return _react.default.createElement("div", {
         className: "page-container"
-      }, _react.default.createElement(_components.Header, null), this.props.view.type === 'default' && session.prevSingle && window.location.href.includes('/book/') && this.bookCheck(), _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
+      }, _react.default.createElement(_components.Header, null), this.props.view.type === 'default' && session.prevSingle && window.location.href.includes('/book/') && this.bookCheck(), window.location.href.includes('/search/') && this.searchCheck() && this.sendQuery(), _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         component: _components.Search
@@ -182,7 +194,7 @@ function (_Component) {
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/search/:query",
         render: function render() {
-          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.SortOptions, null), _react.default.createElement("div", {
+          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.SortOptions, null), _react.default.createElement(_components.FilterList, null), _react.default.createElement("div", {
             className: "search-and-filter"
           }, _react.default.createElement(_components.QueriedItems, null), " ", _react.default.createElement(_components.FilterOptions, null)));
         }
@@ -197,7 +209,9 @@ var mapState = function mapState(state) {
   return {
     user: state.user,
     library: state.library,
-    view: state.view
+    view: state.view,
+    search: state.searchCategory,
+    query: state.query
   };
 };
 
@@ -217,6 +231,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     restoreSearch: function restoreSearch(info) {
       return dispatch((0, _library.queryResult)(info));
+    },
+    setQuery: function setQuery(query) {
+      return dispatch((0, _query.getQuery)(query));
     }
   };
 };
@@ -295,7 +312,8 @@ function (_Component) {
       sessionStorage.setItem('currentView', JSON.stringify(viewInfo));
       sessionStorage.setItem('prevSingle', JSON.stringify(viewInfo));
       this.props.changeView(viewInfo);
-      this.props.history.push("/book/".concat(this.props.title));
+      var formattedTitle = this.props.title.split(' ').join('+');
+      this.props.history.push("/book/".concat(formattedTitle));
     }
   }, {
     key: "editionQuantity",
@@ -364,6 +382,121 @@ var mapDispatch = function mapDispatch(dispatch) {
 var ConnectedSingleBookInList = (0, _reactRedux.connect)(mapState, mapDispatch)(SingleBookInList);
 
 var _default = (0, _reactRouterDom.withRouter)(ConnectedSingleBookInList);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./client/components/appliedFilters.js":
+/*!*********************************************!*\
+  !*** ./client/components/appliedFilters.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _filters = __webpack_require__(/*! ../store/filters */ "./client/store/filters.js");
+
+var _library = __webpack_require__(/*! ../store/library */ "./client/store/library.js");
+
+var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var session = window.sessionStorage;
+
+var AppliedFilters =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AppliedFilters, _Component);
+
+  function AppliedFilters(props) {
+    _classCallCheck(this, AppliedFilters);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(AppliedFilters).call(this, props));
+  }
+
+  _createClass(AppliedFilters, [{
+    key: "removeFilters",
+    value: function removeFilters() {
+      session.setItem('prevQuery', JSON.stringify(JSON.parse(session.restore)));
+      this.props.clearFilters();
+      this.props.sortBy(JSON.parse(session.restore));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      return this.props.filters.length > 0 ? _react.default.createElement("div", {
+        className: "filter-container"
+      }, "Filters Applied:", _react.default.createElement("ul", {
+        id: "filter-list"
+      }, this.props.filters.map(function (filter) {
+        return _react.default.createElement("li", null, " / ", filter);
+      })), _react.default.createElement("div", {
+        className: "removefiltercontainer"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        onClick: function onClick() {
+          return _this.removeFilters();
+        }
+      }, "remove filters"))) : null;
+    }
+  }]);
+
+  return AppliedFilters;
+}(_react.Component);
+
+var mapState = function mapState(state) {
+  return {
+    filters: state.filters
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    restoreSearch: function restoreSearch(info) {
+      return dispatch((0, _library.queryResult)(info));
+    },
+    clearFilters: function clearFilters() {
+      return dispatch((0, _filters.clearFilters)());
+    },
+    sortBy: function sortBy(books) {
+      return dispatch((0, _library.queryResult)(books));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapState, mapDispatch)(AppliedFilters);
 
 exports.default = _default;
 
@@ -601,6 +734,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _library = __webpack_require__(/*! ../store/library */ "./client/store/library.js");
 
+var _filters = __webpack_require__(/*! ../store/filters */ "./client/store/filters.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -648,7 +783,9 @@ function (_Component) {
       var _this$props = this.props,
           library = _this$props.library,
           filterSubject = _this$props.filterSubject,
-          updateFilter = _this$props.updateFilter;
+          updateQueried = _this$props.updateQueried,
+          setFilter = _this$props.setFilter,
+          clearFilters = _this$props.clearFilters;
       var filteredBooks;
 
       if (filterSubject !== 'ebook_count_i') {
@@ -678,7 +815,8 @@ function (_Component) {
       }
 
       session.setItem('prevQuery', JSON.stringify(filteredBooks));
-      updateFilter(filteredBooks);
+      if (value === 'yes') setFilter('Ebook');else if (value === 'no') setFilter('No Ebook');else setFilter(value);
+      updateQueried(filteredBooks);
     }
   }, {
     key: "mapHandler",
@@ -796,8 +934,14 @@ var mapState = function mapState(state) {
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    updateFilter: function updateFilter(filteredBooks) {
+    updateQueried: function updateQueried(filteredBooks) {
       return dispatch((0, _library.queryResult)(filteredBooks));
+    },
+    setFilter: function setFilter(filter) {
+      return dispatch((0, _filters.setFilter)(filter));
+    },
+    clearFilters: function clearFilters() {
+      return dispatch((0, _filters.clearFilters)());
     }
   };
 };
@@ -902,6 +1046,12 @@ Object.defineProperty(exports, "FilterOptions", {
     return _filterOptions.default;
   }
 });
+Object.defineProperty(exports, "FilterList", {
+  enumerable: true,
+  get: function get() {
+    return _appliedFilters.default;
+  }
+});
 
 var _header = _interopRequireDefault(__webpack_require__(/*! ./header */ "./client/components/header.js"));
 
@@ -916,6 +1066,8 @@ var _singleBook = _interopRequireDefault(__webpack_require__(/*! ./singleBook */
 var _sortOptions = _interopRequireDefault(__webpack_require__(/*! ./sortOptions */ "./client/components/sortOptions.js"));
 
 var _filterOptions = _interopRequireDefault(__webpack_require__(/*! ./filterOptions */ "./client/components/filterOptions.js"));
+
+var _appliedFilters = _interopRequireDefault(__webpack_require__(/*! ./appliedFilters */ "./client/components/appliedFilters.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -949,6 +1101,8 @@ var _library = __webpack_require__(/*! ../store/library */ "./client/store/libra
 var _view = __webpack_require__(/*! ../store/view */ "./client/store/view.js");
 
 var _query = __webpack_require__(/*! ../store/query */ "./client/store/query.js");
+
+var _filters = __webpack_require__(/*! ../store/filters */ "./client/store/filters.js");
 
 var _searchCategory = __webpack_require__(/*! ../store/searchCategory */ "./client/store/searchCategory.js");
 
@@ -1007,7 +1161,7 @@ function (_Component) {
   }, {
     key: "formatSearch",
     value: function formatSearch(str) {
-      return str.replace(' ', '+');
+      return str.split(' ').join('+');
     }
   }, {
     key: "handleSubmit",
@@ -1020,7 +1174,8 @@ function (_Component) {
       this.props[searchType](this.state.query);
       this.props.getQuery(this.formatSearch(this.state.query));
       this.props.history.push("/search/".concat(this.formatSearch(this.state.query)));
-      session.setItem('currentView', 'default'); //clearing the input search field
+      session.setItem('currentView', 'default');
+      this.props.clearFilters(); //clearing the input search field
 
       this.setState({
         query: ''
@@ -1090,6 +1245,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     getQuery: function getQuery(query) {
       return dispatch((0, _query.getQuery)(query));
+    },
+    clearFilters: function clearFilters() {
+      return dispatch((0, _filters.clearFilters)());
     }
   };
 };
@@ -1237,6 +1395,8 @@ var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_mo
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
 
 var _view = __webpack_require__(/*! ../store/view */ "./client/store/view.js");
@@ -1338,7 +1498,9 @@ var mapDispatch = function mapDispatch(dispatch) {
 };
 
 var ConnectedSingleBook = (0, _reactRedux.connect)(mapState, mapDispatch)(SingleBookComponent);
-var _default = ConnectedSingleBook;
+
+var _default = (0, _reactRouterDom.withRouter)(ConnectedSingleBook);
+
 exports.default = _default;
 
 /***/ }),
@@ -1367,6 +1529,8 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 var _library = __webpack_require__(/*! ../store/library */ "./client/store/library.js");
 
 var _view = __webpack_require__(/*! ../store/view */ "./client/store/view.js");
+
+var _filters = __webpack_require__(/*! ../store/filters */ "./client/store/filters.js");
 
 var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
 
@@ -1465,7 +1629,21 @@ function (_Component) {
     key: "removeFilters",
     value: function removeFilters() {
       session.setItem('prevQuery', JSON.stringify(JSON.parse(session.restore)));
+      this.props.clearFilters();
       this.props.sortBy(JSON.parse(session.restore));
+    }
+  }, {
+    key: "setActive",
+    value: function setActive(event) {
+      var buttonIds = ['firstpublish', 'mostrecent', 'mosteditions'];
+      buttonIds.forEach(function (buttonId) {
+        var button = document.getElementById(buttonId);
+        button.setAttribute('class', 'btn btn-default');
+      });
+      var buttonSelected = document.getElementById(event); // console.log(event)
+      // event.className = 'active'
+
+      buttonSelected.setAttribute('class', 'btn btn-default active');
     }
   }, {
     key: "componentDidMount",
@@ -1485,27 +1663,32 @@ function (_Component) {
       var library = this.props.library;
       return library.length && this.props.view.type === 'default' ? _react.default.createElement("div", {
         className: "sort-option"
-      }, _react.default.createElement("p", null, "".concat(library.length, " hits")), "SORT BY:", _react.default.createElement(_reactBootstrap.ButtonGroup, null, _react.default.createElement(_reactBootstrap.Button, {
-        onClick: function onClick() {
-          return _this.sortByFirstPublish();
-        }
-      }, "first published"), _react.default.createElement(_reactBootstrap.Button, {
-        onClick: function onClick() {
-          return _this.sortByMostRecent();
-        }
-      }, "most recent"), _react.default.createElement(_reactBootstrap.Button, {
-        onClick: function onClick() {
-          return _this.sortByMostEditions();
-        }
-      }, "most editions"), _react.default.createElement(_reactBootstrap.Button, {
-        onClick: function onClick() {
-          return _this.removeFilters();
-        }
-      }, "remove filters"), _react.default.createElement(_reactBootstrap.Button, {
+      }, _react.default.createElement("p", null, "".concat(library.length, " hits"), ' ', _react.default.createElement(_reactBootstrap.Button, {
         onClick: function onClick() {
           _this.props.history.push('/');
         }
-      }, "clear search"))) : null;
+      }, "clear search")), "SORT BY:", ' ', _react.default.createElement(_reactBootstrap.ButtonGroup, null, _react.default.createElement(_reactBootstrap.Button, {
+        id: "firstpublish",
+        onClick: function onClick() {
+          _this.sortByFirstPublish();
+
+          _this.setActive('firstpublish');
+        }
+      }, "first published"), _react.default.createElement(_reactBootstrap.Button, {
+        id: "mostrecent",
+        onClick: function onClick() {
+          _this.sortByMostRecent();
+
+          _this.setActive('mostrecent');
+        }
+      }, "most recent"), _react.default.createElement(_reactBootstrap.Button, {
+        id: "mosteditions",
+        onClick: function onClick() {
+          _this.sortByMostEditions();
+
+          _this.setActive('mosteditions');
+        }
+      }, "most editions"))) : null;
     }
   }]);
 
@@ -1532,6 +1715,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     restoreSearch: function restoreSearch(info) {
       return dispatch((0, _library.queryResult)(info));
+    },
+    clearFilters: function clearFilters() {
+      return dispatch((0, _filters.clearFilters)());
     }
   };
 };
@@ -1605,6 +1791,69 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
 
 /***/ }),
 
+/***/ "./client/store/filters.js":
+/*!*********************************!*\
+  !*** ./client/store/filters.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+exports.clearFilters = exports.setFilter = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var SET_FILTER = 'SET_FILTER';
+var CLEAR_FILTERS = 'CLEAR_FILTERS';
+
+var setFilter = function setFilter(filter) {
+  return {
+    type: SET_FILTER,
+    filter: filter
+  };
+};
+
+exports.setFilter = setFilter;
+
+var clearFilters = function clearFilters(filter) {
+  return {
+    type: CLEAR_FILTERS
+  };
+};
+
+exports.clearFilters = clearFilters;
+var initialState = [];
+
+function _default() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case SET_FILTER:
+      return _toConsumableArray(state).concat([action.filter]);
+
+    case CLEAR_FILTERS:
+      return [];
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./client/store/index.js":
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
@@ -1636,13 +1885,16 @@ var _query = _interopRequireDefault(__webpack_require__(/*! ./query */ "./client
 
 var _view = _interopRequireDefault(__webpack_require__(/*! ./view */ "./client/store/view.js"));
 
+var _filters = _interopRequireDefault(__webpack_require__(/*! ./filters */ "./client/store/filters.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reducer = (0, _redux.combineReducers)({
   library: _library.default,
   searchCategory: _searchCategory.default,
   view: _view.default,
-  query: _query.default
+  query: _query.default,
+  filters: _filters.default
 });
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk.default, (0, _reduxLogger.default)({
   collapsed: true
@@ -1723,7 +1975,7 @@ var generalSearch = function generalSearch(searchInfo) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                formattedSearch = searchInfo.replace(' ', '+');
+                formattedSearch = searchInfo.split(' ').join('+');
                 _context.next = 4;
                 return _axios.default.get("/api/query/general/".concat(formattedSearch));
 
@@ -1733,6 +1985,7 @@ var generalSearch = function generalSearch(searchInfo) {
                 console.log('query result', docs);
 
                 if (numFound > 0) {
+                  session.setItem('currentView', 'default');
                   session.setItem('prevQuery', JSON.stringify(docs));
                   session.setItem('restore', JSON.stringify(docs));
                   dispatch(queryResult(docs));
@@ -1777,14 +2030,14 @@ var titleSearch = function titleSearch(searchInfo) {
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(dispatch) {
-        var formattedTitle, queryInfo, _queryInfo$data2, docs, numFound;
+        var formattedSearch, queryInfo, _queryInfo$data2, docs, numFound;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-                formattedTitle = searchInfo.replace(' ', '+');
+                formattedSearch = searchInfo.split(' ').join('+');
                 _context2.next = 4;
                 return _axios.default.get("/api/query/title/".concat(formattedTitle));
 
@@ -1837,14 +2090,14 @@ var authorSearch = function authorSearch(searchInfo) {
       var _ref3 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(dispatch) {
-        var formattedAuthorName, queryInfo, _queryInfo$data3, docs, numFound;
+        var formattedSearch, queryInfo, _queryInfo$data3, docs, numFound;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
-                formattedAuthorName = searchInfo.replace(' ', '+');
+                formattedSearch = searchInfo.split(' ').join('+');
                 _context3.next = 4;
                 return _axios.default.get("/api/query/author/".concat(formattedAuthorName));
 

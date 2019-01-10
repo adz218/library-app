@@ -16,7 +16,8 @@ class SingleBookInList extends Component {
     sessionStorage.setItem('currentView', JSON.stringify(viewInfo))
     sessionStorage.setItem('prevSingle', JSON.stringify(viewInfo))
     this.props.changeView(viewInfo)
-    this.props.history.push(`/book/${this.props.title}`)
+    const formattedTitle = this.props.title.split(' ').join('+')
+    this.props.history.push(`/book/${formattedTitle}`)
   }
 
   editionQuantity() {

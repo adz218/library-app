@@ -10,6 +10,7 @@ import {
 } from '../store/library'
 import {restoreDefaultView} from '../store/view'
 import {getQuery} from '../store/query'
+import {clearFilters, setFilter} from '../store/filters'
 import {setCategory} from '../store/searchCategory'
 import SearchDropdown from './searchDropDown'
 
@@ -30,7 +31,7 @@ export class Search extends Component {
   }
 
   formatSearch(str) {
-    return str.replace(' ', '+')
+    return str.split(' ').join('+')
   }
 
   handleSubmit(event) {
@@ -47,7 +48,7 @@ export class Search extends Component {
     this.props.history.push(`/search/${this.formatSearch(this.state.query)}`)
 
     session.setItem('currentView', 'default')
-
+    this.props.clearFilters()
     //clearing the input search field
     this.setState({query: ''})
   }
@@ -100,7 +101,8 @@ const mapDispatch = dispatch => ({
   backToSearch: () => dispatch(restoreDefaultView()),
   clearPreviousSearch: () => dispatch(clearSearch()),
   previousSearchCat: cat => dispatch(setCategory(cat)),
-  getQuery: query => dispatch(getQuery(query))
+  getQuery: query => dispatch(getQuery(query)),
+  clearFilters: () => dispatch(clearFilters())
 })
 
 const ConnectedSearchField = connect(

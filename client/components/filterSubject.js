@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {queryResult} from '../store/library'
+import {clearFilters, setFilter} from '../store/filters'
 
 const session = window.sessionStorage
 
@@ -16,7 +17,13 @@ class FilterSubject extends Component {
   }
 
   handleSelect(value) {
-    const {library, filterSubject, updateFilter} = this.props
+    const {
+      library,
+      filterSubject,
+      updateQueried,
+      setFilter,
+      clearFilters
+    } = this.props
     let filteredBooks
 
     if (filterSubject !== 'ebook_count_i') {
@@ -48,7 +55,12 @@ class FilterSubject extends Component {
     }
 
     session.setItem('prevQuery', JSON.stringify(filteredBooks))
-    updateFilter(filteredBooks)
+
+    if (value === 'yes') setFilter('Ebook')
+    else if (value === 'no') setFilter('No Ebook')
+    else setFilter(value)
+
+    updateQueried(filteredBooks)
   }
 
   mapHandler(categoryObject) {
@@ -149,7 +161,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  updateFilter: filteredBooks => dispatch(queryResult(filteredBooks))
+  updateQueried: filteredBooks => dispatch(queryResult(filteredBooks)),
+  setFilter: filter => dispatch(setFilter(filter)),
+  clearFilters: () => dispatch(clearFilters())
 })
 
 const ConnectedFilterSubject = connect(

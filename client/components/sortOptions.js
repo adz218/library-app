@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {queryResult, clearSearch} from '../store/library'
 import {changeViewInStore} from '../store/view'
+import {clearFilters} from '../store/filters'
 import {Button, ButtonGroup} from 'react-bootstrap'
 
 const session = window.sessionStorage
@@ -67,7 +68,22 @@ class SortAndFilter extends Component {
 
   removeFilters() {
     session.setItem('prevQuery', JSON.stringify(JSON.parse(session.restore)))
+    this.props.clearFilters()
     this.props.sortBy(JSON.parse(session.restore))
+  }
+
+  setActive(event) {
+    const buttonIds = ['firstpublish', 'mostrecent', 'mosteditions']
+    buttonIds.forEach(buttonId => {
+      const button = document.getElementById(buttonId)
+      button.setAttribute('class', 'btn btn-default')
+    })
+
+    const buttonSelected = document.getElementById(event)
+    // console.log(event)
+    // event.className = 'active'
+
+    buttonSelected.setAttribute('class', 'btn btn-default active')
   }
 
   componentDidMount() {
@@ -81,23 +97,44 @@ class SortAndFilter extends Component {
     const {library} = this.props
     return library.length && this.props.view.type === 'default' ? (
       <div className="sort-option">
-        <p>{`${library.length} hits`}</p>
-        SORT BY:
-        <ButtonGroup>
-          <Button onClick={() => this.sortByFirstPublish()}>
-            first published
-          </Button>
-          <Button onClick={() => this.sortByMostRecent()}>most recent</Button>
-          <Button onClick={() => this.sortByMostEditions()}>
-            most editions
-          </Button>
-          <Button onClick={() => this.removeFilters()}>remove filters</Button>
+        <p>
+          {`${library.length} hits`}{' '}
           <Button
             onClick={() => {
               this.props.history.push('/')
             }}
           >
             clear search
+          </Button>
+        </p>
+        SORT BY:{' '}
+        <ButtonGroup>
+          <Button
+            id="firstpublish"
+            onClick={() => {
+              this.sortByFirstPublish()
+              this.setActive('firstpublish')
+            }}
+          >
+            first published
+          </Button>
+          <Button
+            id="mostrecent"
+            onClick={() => {
+              this.sortByMostRecent()
+              this.setActive('mostrecent')
+            }}
+          >
+            most recent
+          </Button>
+          <Button
+            id="mosteditions"
+            onClick={() => {
+              this.sortByMostEditions()
+              this.setActive('mosteditions')
+            }}
+          >
+            most editions
           </Button>
         </ButtonGroup>
       </div>
@@ -114,7 +151,8 @@ const mapDispatch = dispatch => ({
   sortBy: books => dispatch(queryResult(books)),
   clearSearch: () => dispatch(clearSearch()),
   changeView: viewInfo => dispatch(changeViewInStore(viewInfo)),
-  restoreSearch: info => dispatch(queryResult(info))
+  restoreSearch: info => dispatch(queryResult(info)),
+  clearFilters: () => dispatch(clearFilters())
 })
 const ConnectedSortAndFilter = connect(
   mapState,
