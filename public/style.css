@@ -36,6 +36,7 @@ form div {
 }
 
 .sort-option {
+  margin: 0 auto;
   margin-bottom: 2rem;
 }
 .header-content {
@@ -55,6 +56,10 @@ form div {
 
 .search-and-filter {
   display: flex;
+}
+
+ul#filter-list li {
+  display: inline;
 }
 
 .filter-options {
@@ -103,6 +108,17 @@ form div {
   margin-bottom: 10px;
 }
 
+.removefiltercontainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.filter-container {
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
 .card-content {
   margin-left: 2rem;
 }

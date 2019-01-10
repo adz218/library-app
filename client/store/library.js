@@ -19,11 +19,12 @@ export const publishSort = sortedBooks => ({
 export const generalSearch = searchInfo => {
   return async dispatch => {
     try {
-      const formattedSearch = searchInfo.replace(' ', '+')
+      const formattedSearch = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
       const {docs, numFound} = queryInfo.data
       console.log('query result', docs)
       if (numFound > 0) {
+        session.setItem('currentView', 'default')
         session.setItem('prevQuery', JSON.stringify(docs))
         session.setItem('restore', JSON.stringify(docs))
         dispatch(queryResult(docs))
@@ -40,7 +41,7 @@ export const generalSearch = searchInfo => {
 export const titleSearch = searchInfo => {
   return async dispatch => {
     try {
-      const formattedTitle = searchInfo.replace(' ', '+')
+      const formattedSearch = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
       const {docs, numFound} = queryInfo.data
       if (numFound > 0) {
@@ -60,7 +61,7 @@ export const titleSearch = searchInfo => {
 export const authorSearch = searchInfo => {
   return async dispatch => {
     try {
-      const formattedAuthorName = searchInfo.replace(' ', '+')
+      const formattedSearch = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(
         `/api/query/author/${formattedAuthorName}`
       )
