@@ -8,7 +8,8 @@ import {
   SingleBookComponent,
   SortOptions,
   FilterOptions,
-  FilterList
+  FilterList,
+  Welcome
 } from './components'
 import {changeViewInStore, restoreDefaultView} from './store/view'
 import {
@@ -66,7 +67,16 @@ class App extends Component {
           this.sendQuery()}
 
         <Switch>
-          <Route exact path="/" component={Search} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Fragment>
+                <Search />
+                <Welcome />
+              </Fragment>
+            )}
+          />
 
           {this.props.view.type === 'singleBook' && (
             <Route path="/book/:title" component={SingleBookComponent} />

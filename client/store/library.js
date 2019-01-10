@@ -41,7 +41,7 @@ export const generalSearch = searchInfo => {
 export const titleSearch = searchInfo => {
   return async dispatch => {
     try {
-      const formattedSearch = searchInfo.split(' ').join('+')
+      const formattedTitle = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(`/api/query/title/${formattedTitle}`)
       const {docs, numFound} = queryInfo.data
       if (numFound > 0) {
@@ -61,7 +61,7 @@ export const titleSearch = searchInfo => {
 export const authorSearch = searchInfo => {
   return async dispatch => {
     try {
-      const formattedSearch = searchInfo.split(' ').join('+')
+      const formattedAuthorName = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(
         `/api/query/author/${formattedAuthorName}`
       )

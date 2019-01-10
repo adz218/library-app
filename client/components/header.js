@@ -1,12 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {Button} from 'react-bootstrap'
 
-const Header = props => <div className="header-content">Open Library!</div>
+const Header = props => <div className="header-content">Look Book!</div>
 
-export default connect(
-  null,
-  null
-)(Header)
+export default Header
