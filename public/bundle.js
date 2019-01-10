@@ -463,8 +463,10 @@ function (_Component) {
         className: "filter-container"
       }, "Filters Applied:", _react.default.createElement("ul", {
         id: "filter-list"
-      }, this.props.filters.map(function (filter) {
-        return _react.default.createElement("li", null, " / ", filter);
+      }, this.props.filters.map(function (filter, idx) {
+        return _react.default.createElement("li", {
+          key: idx
+        }, " / ", filter);
       })), _react.default.createElement("div", {
         className: "removefiltercontainer"
       }, _react.default.createElement(_reactBootstrap.Button, {

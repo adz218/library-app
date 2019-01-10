@@ -21,8 +21,8 @@ class AppliedFilters extends Component {
       <div className="filter-container">
         Filters Applied:
         <ul id="filter-list">
-          {this.props.filters.map(filter => {
-            return <li> / {filter}</li>
+          {this.props.filters.map((filter, idx) => {
+            return <li key={idx}> / {filter}</li>
           })}
         </ul>
         <div className="removefiltercontainer">
