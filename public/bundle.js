@@ -466,7 +466,6 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "removefiltercontainer"
       }, _react.default.createElement(_reactBootstrap.Button, {
-        bsSize: "small",
         onClick: function onClick() {
           return _this.removeFilters();
         }
@@ -1635,7 +1634,16 @@ function (_Component) {
     }
   }, {
     key: "setActive",
-    value: function setActive(event) {// console.log(event)
+    value: function setActive(event) {
+      var buttonIds = ['firstpublish', 'mostrecent', 'mosteditions'];
+      buttonIds.forEach(function (buttonId) {
+        var button = document.getElementById(buttonId);
+        button.setAttribute('class', 'btn btn-default');
+      });
+      var buttonSelected = document.getElementById(event); // console.log(event)
+      // event.className = 'active'
+
+      buttonSelected.setAttribute('class', 'btn btn-default active');
     }
   }, {
     key: "componentDidMount",
@@ -1660,18 +1668,25 @@ function (_Component) {
           _this.props.history.push('/');
         }
       }, "clear search")), "SORT BY:", ' ', _react.default.createElement(_reactBootstrap.ButtonGroup, null, _react.default.createElement(_reactBootstrap.Button, {
+        id: "firstpublish",
         onClick: function onClick() {
           _this.sortByFirstPublish();
 
-          _this.setActive(event);
+          _this.setActive('firstpublish');
         }
       }, "first published"), _react.default.createElement(_reactBootstrap.Button, {
+        id: "mostrecent",
         onClick: function onClick() {
-          return _this.sortByMostRecent();
+          _this.sortByMostRecent();
+
+          _this.setActive('mostrecent');
         }
       }, "most recent"), _react.default.createElement(_reactBootstrap.Button, {
+        id: "mosteditions",
         onClick: function onClick() {
-          return _this.sortByMostEditions();
+          _this.sortByMostEditions();
+
+          _this.setActive('mosteditions');
         }
       }, "most editions"))) : null;
     }

@@ -26,9 +26,7 @@ class AppliedFilters extends Component {
           })}
         </ul>
         <div className="removefiltercontainer">
-          <Button bsSize="small" onClick={() => this.removeFilters()}>
-            remove filters
-          </Button>
+          <Button onClick={() => this.removeFilters()}>remove filters</Button>
         </div>
       </div>
     ) : null

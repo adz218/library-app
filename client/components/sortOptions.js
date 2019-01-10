@@ -73,7 +73,17 @@ class SortAndFilter extends Component {
   }
 
   setActive(event) {
+    const buttonIds = ['firstpublish', 'mostrecent', 'mosteditions']
+    buttonIds.forEach(buttonId => {
+      const button = document.getElementById(buttonId)
+      button.setAttribute('class', 'btn btn-default')
+    })
+
+    const buttonSelected = document.getElementById(event)
     // console.log(event)
+    // event.className = 'active'
+
+    buttonSelected.setAttribute('class', 'btn btn-default active')
   }
 
   componentDidMount() {
@@ -100,15 +110,30 @@ class SortAndFilter extends Component {
         SORT BY:{' '}
         <ButtonGroup>
           <Button
+            id="firstpublish"
             onClick={() => {
               this.sortByFirstPublish()
-              this.setActive(event)
+              this.setActive('firstpublish')
             }}
           >
             first published
           </Button>
-          <Button onClick={() => this.sortByMostRecent()}>most recent</Button>
-          <Button onClick={() => this.sortByMostEditions()}>
+          <Button
+            id="mostrecent"
+            onClick={() => {
+              this.sortByMostRecent()
+              this.setActive('mostrecent')
+            }}
+          >
+            most recent
+          </Button>
+          <Button
+            id="mosteditions"
+            onClick={() => {
+              this.sortByMostEditions()
+              this.setActive('mosteditions')
+            }}
+          >
             most editions
           </Button>
         </ButtonGroup>
