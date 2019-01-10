@@ -178,9 +178,7 @@ function (_Component) {
         component: _components.Search
       }), this.props.view.type === 'singleBook' && _react.default.createElement(_reactRouterDom.Route, {
         path: "/book/:title",
-        render: function render() {
-          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.SingleBookComponent, null));
-        }
+        component: _components.SingleBookComponent
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/search/:query",
         render: function render() {
