@@ -14,6 +14,7 @@ class SingleBookInList extends Component {
   viewSingleBook() {
     const viewInfo = {type: 'singleBook', info: this.props}
     sessionStorage.setItem('currentView', JSON.stringify(viewInfo))
+    sessionStorage.setItem('prevSingle', JSON.stringify(viewInfo))
     this.props.changeView(viewInfo)
     this.props.history.push(`/book/${this.props.title}`)
   }

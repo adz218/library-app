@@ -52,15 +52,17 @@ class FilterSubject extends Component {
   }
 
   mapHandler(categoryObject) {
-    let category = []
+    const category = []
+    let idx = 1
     for (let specificVal in categoryObject) {
       category.push(
-        <li>
+        <li key={idx}>
           <a onClick={() => this.handleSelect(specificVal)}>
             {specificVal} - {categoryObject[specificVal]}{' '}
           </a>
         </li>
       )
+      idx++
     }
     return category.slice(0, this.state.itemsToShow)
   }

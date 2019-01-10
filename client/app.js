@@ -28,6 +28,9 @@ class App extends Component {
     return 'send' + category + 'Search'
   }
 
+  bookCheck() {
+    this.props.changeView(JSON.parse(session.prevSingle))
+  }
   componentDidMount() {
     if (session.prevQuery) {
       this.props.restoreSearch(JSON.parse(session.prevQuery))
@@ -41,7 +44,10 @@ class App extends Component {
     return (
       <div className="page-container">
         <Header />
-
+        {this.props.view.type === 'default' &&
+          session.prevSingle &&
+          window.location.href.includes('/book/') &&
+          this.bookCheck()}
         <Switch>
           <Route exact path="/" component={Search} />
 

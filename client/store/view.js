@@ -1,6 +1,8 @@
 const SET_VIEW = 'SET_VIEW'
 const RESTORE_DEFAULT = 'RESTORE_DEFAULT'
 
+const session = sessionStorage
+
 export const changeViewInStore = viewInfo => ({
   type: SET_VIEW,
   viewInfo
