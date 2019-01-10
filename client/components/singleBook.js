@@ -12,9 +12,7 @@ export class SingleBookComponent extends Component {
 
   handleSelect() {
     const {history} = this.props
-    console.log('thispropshistory in single book', this.props.history)
     session.setItem('currentView', 'default')
-    // history.push(`/search/${history[history.length - 1]}`)
     history.goBack()
     this.props.backToSearch()
   }

@@ -30,8 +30,8 @@ class FilterOptions extends Component {
     return view.type === 'default' && session.prevQuery && library.length ? (
       <div className="filter-options">
         FILTER BY:
-        {subjects.map(subject => {
-          return <FilterSubject filterSubject={subject} />
+        {subjects.map((subject, idx) => {
+          return <FilterSubject filterSubject={subject} key={idx} />
         })}
       </div>
     ) : null
