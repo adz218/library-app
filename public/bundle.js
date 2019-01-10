@@ -590,7 +590,9 @@ function (_Component) {
         });
       }), library.noneFound && _react.default.createElement("div", {
         className: "queried-books-container"
-      }, "No Results Found"))) : null;
+      }, _react.default.createElement("p", {
+        className: "welcome-text"
+      }, "No Results Found. Please try to be more specific.")))) : null;
     }
   }]);
 
@@ -909,9 +911,9 @@ function (_Component) {
       }
 
       var filterQuantity = Object.keys(categoryObject).length;
-      return _react.default.createElement("div", {
+      return Object.keys(categoryObject).length > 0 ? _react.default.createElement("div", {
         className: "filter-subject-container"
-      }, _react.default.createElement("b", null, Object.keys(categoryObject).length > 0 && this.underscoreRemoved(filterSubject)), _react.default.createElement("ul", null, this.mapHandler(categoryObject)), _react.default.createElement("div", {
+      }, _react.default.createElement("b", null, this.underscoreRemoved(filterSubject)), _react.default.createElement("ul", null, this.mapHandler(categoryObject)), _react.default.createElement("div", {
         className: "show-more-or-less"
       }, _react.default.createElement("p", null, filterQuantity > 5 && _react.default.createElement("button", {
         onClick: function onClick() {
@@ -921,7 +923,7 @@ function (_Component) {
         onClick: function onClick() {
           return _this3.showLess();
         }
-      }, "show less"))));
+      }, "show less")))) : null;
     }
   }]);
 
@@ -971,15 +973,24 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Header = function Header(props) {
   return _react.default.createElement("div", {
     className: "header-content"
-  }, "Look Book!");
+  }, _react.default.createElement("span", {
+    onClick: function onClick() {
+      return props.history.push('/');
+    }
+  }, "Look Book!"));
 };
 
-var _default = Header;
+var _default = (0, _reactRouterDom.withRouter)(Header);
+
 exports.default = _default;
 
 /***/ }),
@@ -1192,6 +1203,14 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var button = document.getElementById('search-submit');
+
+      if (button && this.state.query.length === 0) {
+        button.setAttribute('class', 'btn btn-primary disabled');
+      } else if (button && this.state.query.length > 0) {
+        button.setAttribute('class', 'btn btn-primary');
+      }
+
       return _react.default.createElement(_reactBootstrap.Form, {
         inline: true,
         onSubmit: this.handleSubmit
@@ -1205,7 +1224,8 @@ function (_Component) {
         placeholder: "Search By ".concat(this.props.searchCategory)
       }), _react.default.createElement(_reactBootstrap.InputGroup.Button, null, _react.default.createElement(_reactBootstrap.Button, {
         type: "submit",
-        bsStyle: "primary"
+        bsStyle: "primary",
+        id: "search-submit"
       }, "Submit")))));
     }
   }]);
@@ -1751,7 +1771,9 @@ var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_mo
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 var Welcome = function Welcome(props) {
-  return _react.default.createElement(_react.Fragment, null, "Welcome! Begin searching for a book by title, author, or keyword above.");
+  return _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", {
+    className: "welcome-text"
+  }, "Welcome! Begin searching for a book by title, author, or keyword above."));
 };
 
 var _default = Welcome;
@@ -2011,7 +2033,6 @@ var generalSearch = function generalSearch(searchInfo) {
               case 4:
                 queryInfo = _context.sent;
                 _queryInfo$data = queryInfo.data, docs = _queryInfo$data.docs, numFound = _queryInfo$data.numFound;
-                console.log('query result', docs);
 
                 if (numFound > 0) {
                   session.setItem('currentView', 'default');
@@ -2027,20 +2048,26 @@ var generalSearch = function generalSearch(searchInfo) {
                   }));
                 }
 
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](0);
+                session.setItem('prevQuery', JSON.stringify({
+                  noneFound: true
+                }));
+                dispatch(queryResult({
+                  noneFound: true
+                }));
                 console.error(_context.t0);
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 10]]);
+        }, _callee, this, [[0, 9]]);
       }));
 
       return function (_x) {
@@ -2087,15 +2114,21 @@ var titleSearch = function titleSearch(searchInfo) {
                   }));
                 }
 
-                _context2.next = 12;
+                _context2.next = 14;
                 break;
 
               case 9:
                 _context2.prev = 9;
                 _context2.t0 = _context2["catch"](0);
+                session.setItem('prevQuery', JSON.stringify({
+                  noneFound: true
+                }));
+                dispatch(queryResult({
+                  noneFound: true
+                }));
                 console.error(_context2.t0);
 
-              case 12:
+              case 14:
               case "end":
                 return _context2.stop();
             }
@@ -2147,15 +2180,21 @@ var authorSearch = function authorSearch(searchInfo) {
                   }));
                 }
 
-                _context3.next = 12;
+                _context3.next = 14;
                 break;
 
               case 9:
                 _context3.prev = 9;
                 _context3.t0 = _context3["catch"](0);
+                session.setItem('prevQuery', JSON.stringify({
+                  noneFound: true
+                }));
+                dispatch(queryResult({
+                  noneFound: true
+                }));
                 console.error(_context3.t0);
 
-              case 12:
+              case 14:
               case "end":
                 return _context3.stop();
             }

@@ -1,5 +1,11 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 
-const Header = props => <div className="header-content">Look Book!</div>
+const Header = props => (
+  <div className="header-content">
+    <span onClick={() => props.history.push('/')}>Look Book!</span>
+  </div>
+)
 
-export default Header
+export default withRouter(Header)

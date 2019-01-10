@@ -134,12 +134,9 @@ class FilterSubject extends Component {
 
     const filterQuantity = Object.keys(categoryObject).length
 
-    return (
+    return Object.keys(categoryObject).length > 0 ? (
       <div className="filter-subject-container">
-        <b>
-          {Object.keys(categoryObject).length > 0 &&
-            this.underscoreRemoved(filterSubject)}
-        </b>
+        <b>{this.underscoreRemoved(filterSubject)}</b>
         <ul>{this.mapHandler(categoryObject)}</ul>
         <div className="show-more-or-less">
           <p>
@@ -152,7 +149,7 @@ class FilterSubject extends Component {
           </p>
         </div>
       </div>
-    )
+    ) : null
   }
 }
 

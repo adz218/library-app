@@ -56,7 +56,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.3.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "sinon": "^7.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.55",

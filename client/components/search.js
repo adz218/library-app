@@ -60,6 +60,12 @@ export class Search extends Component {
   }
 
   render() {
+    const button = document.getElementById('search-submit')
+    if (button && this.state.query.length === 0) {
+      button.setAttribute('class', 'btn btn-primary disabled')
+    } else if (button && this.state.query.length > 0) {
+      button.setAttribute('class', 'btn btn-primary')
+    }
     return (
       <Form inline onSubmit={this.handleSubmit}>
         <FormGroup controlId="form-query">
@@ -76,7 +82,7 @@ export class Search extends Component {
               placeholder={`Search By ${this.props.searchCategory}`}
             />
             <InputGroup.Button>
-              <Button type="submit" bsStyle="primary">
+              <Button type="submit" bsStyle="primary" id="search-submit">
                 Submit
               </Button>
             </InputGroup.Button>

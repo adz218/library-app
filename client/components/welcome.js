@@ -2,7 +2,9 @@ import React, {Fragment} from 'react'
 
 const Welcome = props => (
   <Fragment>
-    Welcome! Begin searching for a book by title, author, or keyword above.
+    <p className="welcome-text">
+      Welcome! Begin searching for a book by title, author, or keyword above.
+    </p>
   </Fragment>
 )
 

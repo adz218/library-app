@@ -22,7 +22,6 @@ export const generalSearch = searchInfo => {
       const formattedSearch = searchInfo.split(' ').join('+')
       const queryInfo = await axios.get(`/api/query/general/${formattedSearch}`)
       const {docs, numFound} = queryInfo.data
-      console.log('query result', docs)
       if (numFound > 0) {
         session.setItem('currentView', 'default')
         session.setItem('prevQuery', JSON.stringify(docs))
@@ -33,6 +32,8 @@ export const generalSearch = searchInfo => {
         dispatch(queryResult({noneFound: true}))
       }
     } catch (err) {
+      session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+      dispatch(queryResult({noneFound: true}))
       console.error(err)
     }
   }
@@ -53,6 +54,8 @@ export const titleSearch = searchInfo => {
         dispatch(queryResult({noneFound: true}))
       }
     } catch (err) {
+      session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+      dispatch(queryResult({noneFound: true}))
       console.error(err)
     }
   }
@@ -75,6 +78,8 @@ export const authorSearch = searchInfo => {
         dispatch(queryResult({noneFound: true}))
       }
     } catch (err) {
+      session.setItem('prevQuery', JSON.stringify({noneFound: true}))
+      dispatch(queryResult({noneFound: true}))
       console.error(err)
     }
   }

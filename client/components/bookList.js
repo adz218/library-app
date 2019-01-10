@@ -38,7 +38,11 @@ class QueriedItems extends Component {
               )
             })}
           {library.noneFound && (
-            <div className="queried-books-container">No Results Found</div>
+            <div className="queried-books-container">
+              <p className="welcome-text">
+                No Results Found. Please try to be more specific.
+              </p>
+            </div>
           )}
         </ListGroup>
       </div>

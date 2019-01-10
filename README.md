@@ -1,5 +1,5 @@
-Library App
+Look Book 12.
 
-Query by general, author name, or book title. You may pare down your results using the filters found on the side.
+Search for a book by title, author, or keyword. You may organize your results using the sort and filters options.
 
-The information returned is gathered using Open Library's search API.
+Technologies used include: Node.js, Open Library API, Request, React, React-bootstrap, and React-router.
