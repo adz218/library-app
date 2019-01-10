@@ -52,7 +52,15 @@ class App extends Component {
           <Route exact path="/" component={Search} />
 
           {this.props.view.type === 'singleBook' && (
-            <Route path="/book/:title" component={SingleBookComponent} />
+            <Route
+              path="/book/:title"
+              render={() => (
+                <Fragment>
+                  <Search />
+                  <SingleBookComponent />
+                </Fragment>
+              )}
+            />
           )}
 
           <Route

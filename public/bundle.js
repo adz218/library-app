@@ -178,7 +178,9 @@ function (_Component) {
         component: _components.Search
       }), this.props.view.type === 'singleBook' && _react.default.createElement(_reactRouterDom.Route, {
         path: "/book/:title",
-        component: _components.SingleBookComponent
+        render: function render() {
+          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.SingleBookComponent, null));
+        }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/search/:query",
         render: function render() {
@@ -1237,6 +1239,8 @@ var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_mo
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
 
 var _view = __webpack_require__(/*! ../store/view */ "./client/store/view.js");
@@ -1338,7 +1342,9 @@ var mapDispatch = function mapDispatch(dispatch) {
 };
 
 var ConnectedSingleBook = (0, _reactRedux.connect)(mapState, mapDispatch)(SingleBookComponent);
-var _default = ConnectedSingleBook;
+
+var _default = (0, _reactRouterDom.withRouter)(ConnectedSingleBook);
+
 exports.default = _default;
 
 /***/ }),

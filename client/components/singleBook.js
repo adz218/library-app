@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {Pager} from 'react-bootstrap'
 import {changeViewInStore, restoreDefaultView} from '../store/view'
 
@@ -66,4 +67,4 @@ const ConnectedSingleBook = connect(
   mapDispatch
 )(SingleBookComponent)
 
-export default ConnectedSingleBook
+export default withRouter(ConnectedSingleBook)
