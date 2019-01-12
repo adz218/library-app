@@ -165,6 +165,9 @@ function (_Component) {
     value: function sendQuery() {
       var searchQuery = window.location.href.split('/search/');
       var formattedSearch = searchQuery[1].split(' ').join('+');
+      this.props.changeView({
+        type: 'default'
+      });
       this.props.setQuery(formattedSearch);
       this.props.sendGeneralSearch(formattedSearch);
     }
@@ -173,11 +176,10 @@ function (_Component) {
     value: function componentDidMount() {
       if (session.prevQuery) {
         this.props.restoreSearch(JSON.parse(session.prevQuery));
-      }
+      } // if (session.currentView !== 'default' && session.currentView) {
+      //   this.props.changeView(JSON.parse(session.currentView))
+      // }
 
-      if (session.currentView !== 'default' && session.currentView) {
-        this.props.changeView(JSON.parse(session.currentView));
-      }
     }
   }, {
     key: "render",
