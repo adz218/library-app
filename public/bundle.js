@@ -206,6 +206,10 @@ function (_Component) {
             className: "search-and-filter"
           }, _react.default.createElement(_components.QueriedItems, null), " ", _react.default.createElement(_components.FilterOptions, null)));
         }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        render: function render() {
+          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.Welcome, null));
+        }
       })));
     }
   }]);

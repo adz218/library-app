@@ -106,6 +106,15 @@ class App extends Component {
               </Fragment>
             )}
           />
+
+          <Route
+            render={() => (
+              <Fragment>
+                <Search />
+                <Welcome />
+              </Fragment>
+            )}
+          />
         </Switch>
       </div>
     )
