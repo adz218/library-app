@@ -1180,20 +1180,22 @@ function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      event.preventDefault(); //clearing previous search and updating state to 'default' search view
+      if (this.state.query.length !== 0) {
+        event.preventDefault(); //clearing previous search and updating state to 'default' search view
 
-      this.props.clearPreviousSearch();
-      this.props.backToSearch();
-      var searchType = 'send' + this.props.searchCategory + 'Search';
-      this.props[searchType](this.state.query);
-      this.props.getQuery(this.formatSearch(this.state.query));
-      this.props.history.push("/search/".concat(this.formatSearch(this.state.query)));
-      session.setItem('currentView', 'default');
-      this.props.clearFilters(); //clearing the input search field
+        this.props.clearPreviousSearch();
+        this.props.backToSearch();
+        var searchType = 'send' + this.props.searchCategory + 'Search';
+        this.props[searchType](this.state.query);
+        this.props.getQuery(this.formatSearch(this.state.query));
+        this.props.history.push("/search/".concat(this.formatSearch(this.state.query)));
+        session.setItem('currentView', 'default');
+        this.props.clearFilters(); //clearing the input search field
 
-      this.setState({
-        query: ''
-      });
+        this.setState({
+          query: ''
+        });
+      }
     }
   }, {
     key: "componentDidMount",
@@ -1205,14 +1207,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var button = document.getElementById('search-submit');
-
-      if (button && this.state.query.length === 0) {
-        button.setAttribute('class', 'btn btn-primary disabled');
-      } else if (button && this.state.query.length > 0) {
-        button.setAttribute('class', 'btn btn-primary');
-      }
-
       return _react.default.createElement(_reactBootstrap.Form, {
         inline: true,
         onSubmit: this.handleSubmit
@@ -1227,7 +1221,8 @@ function (_Component) {
       }), _react.default.createElement(_reactBootstrap.InputGroup.Button, null, _react.default.createElement(_reactBootstrap.Button, {
         type: "submit",
         bsStyle: "primary",
-        id: "search-submit"
+        id: "search-submit",
+        disabled: !this.state.query.length
       }, "Submit")))));
     }
   }]);

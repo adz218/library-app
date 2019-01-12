@@ -1,7 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {Button, FormControl, FormGroup, Form, InputGroup} from 'react-bootstrap'
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  Form,
+  InputGroup,
+  Alert
+} from 'react-bootstrap'
 import {
   generalSearch,
   titleSearch,
@@ -35,22 +42,24 @@ export class Search extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault()
+    if (this.state.query.length !== 0) {
+      event.preventDefault()
 
-    //clearing previous search and updating state to 'default' search view
-    this.props.clearPreviousSearch()
-    this.props.backToSearch()
+      //clearing previous search and updating state to 'default' search view
+      this.props.clearPreviousSearch()
+      this.props.backToSearch()
 
-    const searchType = 'send' + this.props.searchCategory + 'Search'
-    this.props[searchType](this.state.query)
+      const searchType = 'send' + this.props.searchCategory + 'Search'
+      this.props[searchType](this.state.query)
 
-    this.props.getQuery(this.formatSearch(this.state.query))
-    this.props.history.push(`/search/${this.formatSearch(this.state.query)}`)
+      this.props.getQuery(this.formatSearch(this.state.query))
+      this.props.history.push(`/search/${this.formatSearch(this.state.query)}`)
 
-    session.setItem('currentView', 'default')
-    this.props.clearFilters()
-    //clearing the input search field
-    this.setState({query: ''})
+      session.setItem('currentView', 'default')
+      this.props.clearFilters()
+      //clearing the input search field
+      this.setState({query: ''})
+    }
   }
 
   componentDidMount() {
@@ -60,12 +69,6 @@ export class Search extends Component {
   }
 
   render() {
-    const button = document.getElementById('search-submit')
-    if (button && this.state.query.length === 0) {
-      button.setAttribute('class', 'btn btn-primary disabled')
-    } else if (button && this.state.query.length > 0) {
-      button.setAttribute('class', 'btn btn-primary')
-    }
     return (
       <Form inline onSubmit={this.handleSubmit}>
         <FormGroup controlId="form-query">
@@ -82,7 +85,12 @@ export class Search extends Component {
               placeholder={`Search By ${this.props.searchCategory}`}
             />
             <InputGroup.Button>
-              <Button type="submit" bsStyle="primary" id="search-submit">
+              <Button
+                type="submit"
+                bsStyle="primary"
+                id="search-submit"
+                disabled={!this.state.query.length}
+              >
                 Submit
               </Button>
             </InputGroup.Button>
