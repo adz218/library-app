@@ -988,7 +988,7 @@ var Header = function Header(props) {
     onClick: function onClick() {
       return props.history.push('/');
     }
-  }, "Look Book!"));
+  }, "LOOK BOOK!"));
 };
 
 var _default = (0, _reactRouterDom.withRouter)(Header);

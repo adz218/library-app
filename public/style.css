@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald') body {
+body {
   font-family: sans-serif;
 }
 
@@ -42,9 +42,11 @@ form div {
 .header-content {
   display: flex;
   font-family: 'Oswald', sans-serif;
-  font-size: 45px;
+  letter-spacing: 0.7rem;
+  font-size: 55px;
   margin: 0 auto;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .queried-books-container {
@@ -131,5 +133,6 @@ ul#filter-list li {
 }
 
 .welcome-text {
-  font-size: 22px;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
 }
