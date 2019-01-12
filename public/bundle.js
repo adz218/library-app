@@ -190,6 +190,12 @@ function (_Component) {
         render: function render() {
           return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.Welcome, null));
         }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/search/",
+        render: function render() {
+          return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_components.Search, null), _react.default.createElement(_components.Welcome, null));
+        }
       }), this.props.view.type === 'singleBook' && _react.default.createElement(_reactRouterDom.Route, {
         path: "/book/:title",
         component: _components.SingleBookComponent
@@ -991,6 +997,9 @@ var Header = function Header(props) {
   }, _react.default.createElement("span", {
     onClick: function onClick() {
       return props.history.push('/');
+    },
+    style: {
+      cursor: 'pointer'
     }
   }, "LOOK BOOK!"));
 };
