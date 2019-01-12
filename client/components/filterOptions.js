@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Well} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {queryResult} from '../store/library'
 import FilterSubject from './filterSubject'
@@ -29,10 +30,12 @@ class FilterOptions extends Component {
 
     return view.type === 'default' && session.prevQuery && library.length ? (
       <div className="filter-options">
-        FILTER BY:
-        {subjects.map((subject, idx) => {
-          return <FilterSubject filterSubject={subject} key={idx} />
-        })}
+        <Well id="well-container">
+          FILTER BY:
+          {subjects.map((subject, idx) => {
+            return <FilterSubject filterSubject={subject} key={idx} />
+          })}
+        </Well>
       </div>
     ) : null
   }

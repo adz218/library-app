@@ -131,6 +131,9 @@ ul#filter-list li {
   border-radius: 5px;
   margin: 0 auto;
 }
+#well-container {
+  background-color: white;
+}
 
 .welcome-text {
   font-size: 18px;

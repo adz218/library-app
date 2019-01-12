@@ -639,6 +639,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
 var _library = __webpack_require__(/*! ../store/library */ "./client/store/library.js");
@@ -694,12 +696,14 @@ function (_Component) {
           library = _this$props.library;
       return view.type === 'default' && session.prevQuery && library.length ? _react.default.createElement("div", {
         className: "filter-options"
+      }, _react.default.createElement(_reactBootstrap.Well, {
+        id: "well-container"
       }, "FILTER BY:", subjects.map(function (subject, idx) {
         return _react.default.createElement(_filterSubject.default, {
           filterSubject: subject,
           key: idx
         });
-      })) : null;
+      }))) : null;
     }
   }]);
 
