@@ -389,7 +389,8 @@ var mapDispatch = function mapDispatch(dispatch) {
       return dispatch((0, _view.changeViewInStore)(viewInfo));
     }
   };
-};
+}; //changes
+
 
 var ConnectedSingleBookInList = (0, _reactRedux.connect)(mapState, mapDispatch)(SingleBookInList);
 

@@ -75,6 +75,7 @@ const mapDispatch = dispatch => ({
   changeView: viewInfo => dispatch(changeViewInStore(viewInfo))
 })
 
+//changes
 const ConnectedSingleBookInList = connect(
   mapState,
   mapDispatch
