@@ -1000,6 +1000,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(props) {
   return _react.default.createElement("div", {
+    className: "header-container"
+  }, _react.default.createElement("div", {
     className: "header-content"
   }, _react.default.createElement("span", {
     onClick: function onClick() {
@@ -1008,7 +1010,25 @@ var Header = function Header(props) {
     style: {
       cursor: 'pointer'
     }
-  }, "LOOK BOOK!"));
+  }, "LOOK BOOK!")), _react.default.createElement("div", {
+    className: "single-link"
+  }, _react.default.createElement("a", {
+    onClick: function onClick() {
+      return props.history.push('/');
+    }
+  }, "HOME")), _react.default.createElement("div", {
+    className: "single-link"
+  }, _react.default.createElement("a", {
+    href: "https://github.com/adz218/library-app"
+  }, "GITHUB")), _react.default.createElement("div", {
+    className: "single-link"
+  }, _react.default.createElement("a", {
+    href: "https://linkedin.com/in/adz218"
+  }, "LINKEDIN")), _react.default.createElement("div", {
+    className: "single-link"
+  }, _react.default.createElement("a", {
+    href: "https://openlibrary.org/developers/api"
+  }, "OPEN LIBRARY")));
 };
 
 var _default = (0, _reactRouterDom.withRouter)(Header);
