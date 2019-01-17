@@ -35,24 +35,17 @@ class SingleBookInList extends Component {
       <ListGroupItem onClick={() => this.viewSingleBook()}>
         <div className="list-item">
           <div className="book-title-and-cover">
-            {cover && (
+            {cover ? (
               <img
                 src={`https://covers.openlibrary.org/w/id/${cover}-S.jpg`}
                 className="search-cover-img"
               />
-            )}
-            {!cover && isbn && (
-              <img
-                src={`http://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}
-                className="search-cover-img"
-              />
-            )}
-            {!cover && !isbn && (
+            ) : (
               <img
                 src="https://openlibrary.org/images/icons/avatar_book-sm.png"
                 style={blankStyles}
               />
-            )}{' '}
+            )}
             {title}
           </div>
           {author}

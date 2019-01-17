@@ -55,13 +55,9 @@ const mapState = state => ({
   view: state.view
 })
 
-const mapDispatch = dispatch => ({
-  changeView: viewInfo => dispatch(changeViewInStore(viewInfo))
-})
-
 const ConnectedQueriedItems = connect(
   mapState,
-  mapDispatch
+  null
 )(QueriedItems)
 
 export default ConnectedQueriedItems

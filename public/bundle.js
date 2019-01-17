@@ -363,16 +363,13 @@ function (_Component) {
         className: "list-item"
       }, _react.default.createElement("div", {
         className: "book-title-and-cover"
-      }, cover && _react.default.createElement("img", {
+      }, cover ? _react.default.createElement("img", {
         src: "https://covers.openlibrary.org/w/id/".concat(cover, "-S.jpg"),
         className: "search-cover-img"
-      }), !cover && isbn && _react.default.createElement("img", {
-        src: "http://covers.openlibrary.org/b/isbn/".concat(isbn, "-S.jpg"),
-        className: "search-cover-img"
-      }), !cover && !isbn && _react.default.createElement("img", {
+      }) : _react.default.createElement("img", {
         src: "https://openlibrary.org/images/icons/avatar_book-sm.png",
         style: blankStyles
-      }), ' ', title), author, _react.default.createElement("br", null), _react.default.createElement("p", null, this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))));
+      }), title), author, _react.default.createElement("br", null), _react.default.createElement("p", null, this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))));
     }
   }]);
 
@@ -501,9 +498,6 @@ var mapState = function mapState(state) {
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    restoreSearch: function restoreSearch(info) {
-      return dispatch((0, _library.queryResult)(info));
-    },
     clearFilters: function clearFilters() {
       return dispatch((0, _filters.clearFilters)());
     },
@@ -621,15 +615,7 @@ var mapState = function mapState(state) {
   };
 };
 
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    changeView: function changeView(viewInfo) {
-      return dispatch((0, _view.changeViewInStore)(viewInfo));
-    }
-  };
-};
-
-var ConnectedQueriedItems = (0, _reactRedux.connect)(mapState, mapDispatch)(QueriedItems);
+var ConnectedQueriedItems = (0, _reactRedux.connect)(mapState, null)(QueriedItems);
 var _default = ConnectedQueriedItems;
 exports.default = _default;
 
@@ -1514,12 +1500,10 @@ function (_Component) {
           lccn = _this$props$singleBoo.lccn;
       return this.props.view.type === 'singleBook' ? _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "single-book-card"
-      }, cover && _react.default.createElement("img", {
+      }, cover ? _react.default.createElement("img", {
         src: "https://covers.openlibrary.org/w/id/".concat(cover, "-M.jpg")
-      }), !cover && isbn && _react.default.createElement("img", {
-        src: "http://covers.openlibrary.org/b/isbn/".concat(isbn, "-M.jpg")
-      }), !cover && !isbn && _react.default.createElement("img", {
-        src: "https://openlibrary.org/images/icons/avatar_book-sm.png"
+      }) : _react.default.createElement("img", {
+        src: "https://openlibrary.org/images/icons/avatar_book.png"
       }), _react.default.createElement("div", {
         className: "card-content"
       }, _react.default.createElement("h3", null, title), author, " ", _react.default.createElement("br", null), isbn && _react.default.createElement("a", {

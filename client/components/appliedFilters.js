@@ -38,7 +38,6 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  restoreSearch: info => dispatch(queryResult(info)),
   clearFilters: () => dispatch(clearFilters()),
   sortBy: books => dispatch(queryResult(books))
 })
