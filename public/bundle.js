@@ -352,8 +352,9 @@ function (_Component) {
           oclc = _this$props.oclc,
           lccn = _this$props.lccn;
       var blankStyles = {
-        width: '40px',
-        height: '58px'
+        width: '70px',
+        height: '100px',
+        'margin-right': '1rem'
       };
       return _react.default.createElement(_reactBootstrap.ListGroupItem, {
         onClick: function onClick() {
@@ -364,12 +365,17 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "book-title-and-cover"
       }, cover ? _react.default.createElement("img", {
-        src: "https://covers.openlibrary.org/w/id/".concat(cover, "-S.jpg"),
-        className: "search-cover-img"
+        src: "https://covers.openlibrary.org/w/id/".concat(cover, "-M.jpg"),
+        className: "search-cover-img",
+        style: blankStyles
       }) : _react.default.createElement("img", {
         src: "https://openlibrary.org/images/icons/avatar_book-sm.png",
         style: blankStyles
-      }), title), author, _react.default.createElement("br", null), _react.default.createElement("p", null, this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))));
+      }), _react.default.createElement("div", {
+        className: "book-li"
+      }, _react.default.createElement("p", null, _react.default.createElement("b", {
+        className: "book-li-title"
+      }, title), _react.default.createElement("br", null), author ? author : 'N/A', _react.default.createElement("br", null), this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))))));
     }
   }]);
 
@@ -1506,7 +1512,7 @@ function (_Component) {
         src: "https://openlibrary.org/images/icons/avatar_book.png"
       }), _react.default.createElement("div", {
         className: "card-content"
-      }, _react.default.createElement("h3", null, title), author, " ", _react.default.createElement("br", null), isbn && _react.default.createElement("a", {
+      }, _react.default.createElement("h3", null, title), author ? author : 'N/A', " ", _react.default.createElement("br", null), isbn && _react.default.createElement("a", {
         href: "https://openlibrary.org/isbn/".concat(isbn)
       }, "For More Information"))), _react.default.createElement(_reactBootstrap.Pager, null, _react.default.createElement(_reactBootstrap.Pager.Item, {
         onSelect: function onSelect() {

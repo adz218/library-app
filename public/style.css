@@ -32,6 +32,7 @@ form div {
 }
 
 .book-title-and-cover {
+  display: flex;
   cursor: pointer;
 }
 
@@ -97,6 +98,15 @@ ul#filter-list li {
   align-items: center;
   margin: 0 auto;
   margin-bottom: 2rem;
+}
+
+.book-li {
+  display: flex;
+  align-items: center;
+}
+
+.book-li-title {
+  font-size: 16px;
 }
 
 .form-control {

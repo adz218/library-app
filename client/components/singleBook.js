@@ -30,7 +30,7 @@ export class SingleBookComponent extends Component {
           )}
           <div className="card-content">
             <h3>{title}</h3>
-            {author} <br />
+            {author ? author : 'N/A'} <br />
             {isbn && (
               <a href={`https://openlibrary.org/isbn/${isbn}`}>
                 For More Information
