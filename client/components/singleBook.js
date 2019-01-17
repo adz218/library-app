@@ -23,14 +23,14 @@ export class SingleBookComponent extends Component {
     return this.props.view.type === 'singleBook' ? (
       <Fragment>
         <div className="single-book-card">
-          {cover ? (
+          {cover && cover !== -1 ? (
             <img src={`https://covers.openlibrary.org/w/id/${cover}-M.jpg`} />
           ) : (
             <img src="https://openlibrary.org/images/icons/avatar_book.png" />
           )}
           <div className="card-content">
             <h3>{title}</h3>
-            {author ? author : 'N/A'} <br />
+            {author ? author : 'Author N/A'} <br />
             {isbn && (
               <a href={`https://openlibrary.org/isbn/${isbn}`}>
                 For More Information

@@ -35,7 +35,7 @@ class SingleBookInList extends Component {
       <ListGroupItem onClick={() => this.viewSingleBook()}>
         <div className="list-item">
           <div className="book-title-and-cover">
-            {cover ? (
+            {cover && cover !== -1 ? (
               <img
                 src={`https://covers.openlibrary.org/w/id/${cover}-M.jpg`}
                 className="search-cover-img"
@@ -51,7 +51,7 @@ class SingleBookInList extends Component {
               <p>
                 <b className="book-li-title">{title}</b>
                 <br />
-                {author ? author : 'N/A'}
+                {author ? author : 'Author N/A'}
                 <br />
                 {this.editionQuantity()}{' '}
                 {publish && `- first published in ${publish}`}

@@ -364,7 +364,7 @@ function (_Component) {
         className: "list-item"
       }, _react.default.createElement("div", {
         className: "book-title-and-cover"
-      }, cover ? _react.default.createElement("img", {
+      }, cover && cover !== -1 ? _react.default.createElement("img", {
         src: "https://covers.openlibrary.org/w/id/".concat(cover, "-M.jpg"),
         className: "search-cover-img",
         style: blankStyles
@@ -375,7 +375,7 @@ function (_Component) {
         className: "book-li"
       }, _react.default.createElement("p", null, _react.default.createElement("b", {
         className: "book-li-title"
-      }, title), _react.default.createElement("br", null), author ? author : 'N/A', _react.default.createElement("br", null), this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))))));
+      }, title), _react.default.createElement("br", null), author ? author : 'Author N/A', _react.default.createElement("br", null), this.editionQuantity(), ' ', publish && "- first published in ".concat(publish))))));
     }
   }]);
 
@@ -1506,13 +1506,13 @@ function (_Component) {
           lccn = _this$props$singleBoo.lccn;
       return this.props.view.type === 'singleBook' ? _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "single-book-card"
-      }, cover ? _react.default.createElement("img", {
+      }, cover && cover !== -1 ? _react.default.createElement("img", {
         src: "https://covers.openlibrary.org/w/id/".concat(cover, "-M.jpg")
       }) : _react.default.createElement("img", {
         src: "https://openlibrary.org/images/icons/avatar_book.png"
       }), _react.default.createElement("div", {
         className: "card-content"
-      }, _react.default.createElement("h3", null, title), author ? author : 'N/A', " ", _react.default.createElement("br", null), isbn && _react.default.createElement("a", {
+      }, _react.default.createElement("h3", null, title), author ? author : 'Author N/A', " ", _react.default.createElement("br", null), isbn && _react.default.createElement("a", {
         href: "https://openlibrary.org/isbn/".concat(isbn)
       }, "For More Information"))), _react.default.createElement(_reactBootstrap.Pager, null, _react.default.createElement(_reactBootstrap.Pager.Item, {
         onSelect: function onSelect() {
