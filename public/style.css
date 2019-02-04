@@ -69,12 +69,32 @@ form div {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
+
   .welcome-text {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 18px;
     font-family: 'Roboto', sans-serif;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 338px) {
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.7rem;
+    font-size: 30px;
+    margin: 0;
+    margin-right: 1rem;
   }
 }
 
@@ -115,9 +135,7 @@ ul#filter-list li {
 
 .form-inline {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+  align-items: flex-start;
   margin-bottom: 2rem;
 }
 
@@ -136,9 +154,7 @@ ul#filter-list li {
 
 .form-group {
   display: flex;
-  flex-direction: column;
   width: 100%;
-  align-items: center;
 }
 
 .filter-subject-container {
